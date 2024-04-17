@@ -40,7 +40,7 @@ public class GathererAI : MonoBehaviour {
 
 			case State.MovingToResourceNode:
 				if (unit.isIdle()) {
-					unit.MoveTo(resourceNode.GetPosition(), 2.3f, () => {
+					unit.MoveTo(resourceNode.GetPosition(), 3.7f, () => {
 						state = State.GatheringResources;
 					});
 				}
@@ -64,7 +64,7 @@ public class GathererAI : MonoBehaviour {
 
 			case State.MovingToStorage:
 				if (unit.isIdle()) {
-					unit.MoveTo(storageTransform.position, 2.3f, () => {
+					unit.MoveTo(storageTransform.position, 2.5f, () => {
 						GameResources.AddWoodAmount(woodInventoryAmount);
 						Debug.Log("Gathered " + GameResources.GetWoodAmount() + " wood");
 						woodInventoryAmount = 0;

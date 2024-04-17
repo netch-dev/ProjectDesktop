@@ -1,6 +1,8 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
+using static UnityEngine.GraphicsBuffer;
 
 public class ResourceGathererUnit : MonoBehaviour, IUnit {
 	[SerializeField] private Animator animator;
@@ -40,11 +42,17 @@ public class ResourceGathererUnit : MonoBehaviour, IUnit {
 	}
 
 	public void PlayAnimationMine(Vector3 lookAtPosition, System.Action callback) {
-		StartCoroutine(PlayAnimation("Mine", callback));
+		StartCoroutine(PlayAnimation(lookAtPosition, callback));
 	}
 
-	private IEnumerator PlayAnimation(string animationName, System.Action callback) {
+	private IEnumerator PlayAnimation(Vector3 lookAtPosition, System.Action callback) {
 		isGathering = true;
+
+		// use a while loop to make sure the unit is facing the correct direction
+		while (Vector3.Angle(transform.forward, lookAtPosition - transform.position) > 5f) {
+			transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(lookAtPosition - transform.position), Time.deltaTime * 10f);
+			yield return null;
+		}
 
 		animator.SetTrigger("Attack_OneHand");
 

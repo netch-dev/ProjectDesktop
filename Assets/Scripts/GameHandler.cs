@@ -51,7 +51,7 @@ public class GameHandler : MonoBehaviour {
 	}
 
 	private ResourceNode GetResourceNodeNearPosition(Vector3 position) {
-		float maxDistance = 10f;
+		float maxDistance = 9f;
 
 		List<ResourceNode> tempResourceNodeList = new List<ResourceNode>(resourceNodeList);
 		foreach (ResourceNode resourceNode in resourceNodeList) {
