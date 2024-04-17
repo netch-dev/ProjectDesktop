@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,9 +6,9 @@ using UnityEngine;
 public class GameHandler : MonoBehaviour {
 	private static GameHandler Instance;
 
-	[SerializeField] private Transform woodNodeTransform;
-	[SerializeField] private Transform woodNodeTransform1;
-	[SerializeField] private Transform woodNodeTransform2;
+	[SerializeField] private GathererAI gathererAI;
+
+	[SerializeField] private Transform[] woodNodeTransformArray;
 	[SerializeField] private Transform storageTransform;
 
 	private List<ResourceNode> resourceNodeList;
@@ -15,9 +16,21 @@ public class GameHandler : MonoBehaviour {
 		Instance = this;
 
 		resourceNodeList = new List<ResourceNode>();
-		resourceNodeList.Add(new ResourceNode(woodNodeTransform));
-		resourceNodeList.Add(new ResourceNode(woodNodeTransform1));
-		resourceNodeList.Add(new ResourceNode(woodNodeTransform2));
+		foreach (Transform woodNodeTransform in woodNodeTransformArray) {
+			resourceNodeList.Add(new ResourceNode(woodNodeTransform.transform));
+		}
+
+		ResourceNode.OnResourceNodeClicked += ResourceNode_OnResourceNodeClicked;
+	}
+
+	private void ResourceNode_OnResourceNodeClicked(object sender, EventArgs e) {
+		if (gathererAI == null) {
+			Debug.LogError("GathererAI is not set in the GameHandler script.");
+			return;
+		}
+
+		ResourceNode resourceNode = sender as ResourceNode;
+		if (resourceNode != null) gathererAI.SetResouceNode(resourceNode);
 	}
 
 	private ResourceNode GetResourceNode() {
@@ -35,6 +48,25 @@ public class GameHandler : MonoBehaviour {
 	}
 	public static ResourceNode GetResourceNode_Static() {
 		return Instance.GetResourceNode();
+	}
+
+	private ResourceNode GetResourceNodeNearPosition(Vector3 position) {
+		float maxDistance = 10f;
+
+		List<ResourceNode> tempResourceNodeList = new List<ResourceNode>(resourceNodeList);
+		foreach (ResourceNode resourceNode in resourceNodeList) {
+			if (!resourceNode.HasResources() || Vector3.Distance(position, resourceNode.GetPosition()) > maxDistance) {
+				tempResourceNodeList.Remove(resourceNode);
+			}
+		}
+		if (tempResourceNodeList.Count > 0) {
+			return tempResourceNodeList[UnityEngine.Random.Range(0, tempResourceNodeList.Count)];
+		} else {
+			return null;
+		}
+	}
+	public static ResourceNode GetResourceNodeNearPosition_Static(Vector3 position) {
+		return Instance.GetResourceNodeNearPosition(position);
 	}
 
 	private Transform GetStorage() {

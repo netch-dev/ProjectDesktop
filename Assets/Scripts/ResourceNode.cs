@@ -1,15 +1,24 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class ResourceNode {
+	public static event EventHandler OnResourceNodeClicked;
+
 	private Transform resourceNodeTransform;
 
 	private int resourceAmount;
 
 	public ResourceNode(Transform resourceNodeTransform) {
+		resourceNodeTransform.GetComponent<ClickableObject>().OnClick += ClickableObjectOnClick;
+
 		this.resourceNodeTransform = resourceNodeTransform;
 		resourceAmount = 3;
+	}
+
+	private void ClickableObjectOnClick(object sender, EventArgs e) {
+		OnResourceNodeClicked?.Invoke(this, EventArgs.Empty);
 	}
 
 	public Vector3 GetPosition() {
