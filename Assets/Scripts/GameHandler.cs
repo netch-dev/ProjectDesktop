@@ -40,10 +40,7 @@ public class GameHandler : MonoBehaviour {
 	}
 
 	private void ResourceNode_OnResourceNodeClicked(object sender, EventArgs e) {
-		if (selectedGathererAI == null) {
-			Debug.LogError("GathererAI is not set in the GameHandler script.");
-			return;
-		}
+		if (selectedGathererAI == null) return;
 
 		ResourceNode resourceNode = sender as ResourceNode;
 		if (resourceNode != null) selectedGathererAI.SetResouceNode(resourceNode);

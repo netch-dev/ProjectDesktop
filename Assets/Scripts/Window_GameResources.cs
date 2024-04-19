@@ -1,15 +1,17 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class Window_GameResources : MonoBehaviour {
-	private Text woodAmountText;
+	[SerializeField] private TextMeshProUGUI cornAmountText;
+	[SerializeField] private TextMeshProUGUI woodAmountText;
+	[SerializeField] private TextMeshProUGUI goldAmountText;
 	private void Awake() {
-		GameResources.OnWoodAmountChanged += GameResourceOnWoodAmountChanged;
+		GameResources.OnResourceAmountChanged += GameResourceOnWoodAmountChanged;
 
-		woodAmountText = transform.Find("woodAmount").GetComponent<Text>();
 		UpdateResourceTextObject();
 	}
 
@@ -18,6 +20,7 @@ public class Window_GameResources : MonoBehaviour {
 	}
 
 	private void UpdateResourceTextObject() {
-		if (woodAmountText) woodAmountText.text = "WOOD: " + GameResources.GetResourceAmount(GameResources.ResourceType.Wood);
+		if (woodAmountText) woodAmountText.text = GameResources.GetResourceAmount(GameResources.ResourceType.Wood).ToString("N0");
+		if (goldAmountText) goldAmountText.text = GameResources.GetResourceAmount(GameResources.ResourceType.Gold).ToString("N0");
 	}
 }

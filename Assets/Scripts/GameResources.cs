@@ -5,7 +5,7 @@ using UnityEngine;
 
 public static class GameResources {
 
-	public static event EventHandler OnWoodAmountChanged;
+	public static event EventHandler OnResourceAmountChanged;
 
 	public enum ResourceType {
 		Wood,
@@ -23,7 +23,7 @@ public static class GameResources {
 
 	public static void AddResourceAmount(ResourceType resourceType, int amount) {
 		resourceAmountDictionary[resourceType] += amount;
-		OnWoodAmountChanged?.Invoke(null, EventArgs.Empty);
+		OnResourceAmountChanged?.Invoke(null, EventArgs.Empty);
 	}
 
 	public static int GetResourceAmount(ResourceType resourceType) {
