@@ -18,6 +18,6 @@ public class Window_GameResources : MonoBehaviour {
 	}
 
 	private void UpdateResourceTextObject() {
-		if (woodAmountText) woodAmountText.text = "WOOD: " + GameResources.GetWoodAmount();
+		if (woodAmountText) woodAmountText.text = "WOOD: " + GameResources.GetResourceAmount(GameResources.ResourceType.Wood);
 	}
 }

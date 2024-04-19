@@ -7,14 +7,17 @@ public class ResourceNode {
 	public static event EventHandler OnResourceNodeClicked;
 
 	private Transform resourceNodeTransform;
+	private GameResources.ResourceType resourceType;
 
 	private int resourceAmount;
 
-	public ResourceNode(Transform resourceNodeTransform) {
+	public ResourceNode(Transform resourceNodeTransform, GameResources.ResourceType resourceType) {
 		resourceNodeTransform.GetComponent<ClickableObject>().OnClick += ClickableObjectOnClick;
 
 		this.resourceNodeTransform = resourceNodeTransform;
-		resourceAmount = 3;
+		this.resourceType = resourceType;
+
+		this.resourceAmount = 3;
 	}
 
 	private void ClickableObjectOnClick(object sender, EventArgs e) {
@@ -24,13 +27,18 @@ public class ResourceNode {
 	public Vector3 GetPosition() {
 		return resourceNodeTransform.position;
 	}
+	public GameResources.ResourceType GetResourceType() {
+		return resourceType;
+	}
 
-	public void GrabResource() {
+	public GameResources.ResourceType GrabResource() {
 		resourceAmount -= 1;
 
 		if (resourceAmount <= 0) {
 			ToggleVisuals(false);
 		}
+
+		return resourceType;
 	}
 	private void ToggleVisuals(bool isEnabled) {
 		if (isEnabled) {
@@ -50,4 +58,5 @@ public class ResourceNode {
 	public bool HasResources() {
 		return resourceAmount > 0;
 	}
+
 }

@@ -1,6 +1,10 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Windows.Speech;
 
 public class GathererAI : MonoBehaviour {
+	public static event EventHandler OnGathererClicked;
 	private enum State {
 		Idle,
 		MovingToResourceNode,
@@ -9,23 +13,58 @@ public class GathererAI : MonoBehaviour {
 	}
 	private IUnit unit;
 	private State state;
+
+	private Dictionary<GameResources.ResourceType, int> inventoryAmountDictionary;
+
 	private ResourceNode resourceNode = null;
 	private Transform storageTransform;
 	private TextMesh inventoryTextMesh;
-
-	private int woodInventoryAmount = 0;
 
 	private void Awake() {
 		unit = gameObject.GetComponent<IUnit>();
 		state = State.Idle;
 
+		inventoryAmountDictionary = new Dictionary<GameResources.ResourceType, int>();
+		foreach (GameResources.ResourceType resourceType in System.Enum.GetValues(typeof(GameResources.ResourceType))) {
+			inventoryAmountDictionary[resourceType] = 0;
+		}
+
 		inventoryTextMesh = transform.Find("inventoryTextMesh").GetComponent<TextMesh>();
 		UpdateInventoryText();
+
+		ClickableObject clickable = gameObject.GetComponent<ClickableObject>();
+		if (clickable == null) Debug.LogError("ClickableObject not found");
+
+		gameObject.GetComponent<ClickableObject>().OnClick += GathererAI_OnClick;
+	}
+
+	private void GathererAI_OnClick(object sender, EventArgs e) {
+		OnGathererClicked?.Invoke(this, EventArgs.Empty);
+	}
+
+	private void DropInventoryIntoGameResources() {
+		foreach (GameResources.ResourceType resourceType in System.Enum.GetValues(typeof(GameResources.ResourceType))) {
+			GameResources.AddResourceAmount(resourceType, inventoryAmountDictionary[resourceType]);
+			inventoryAmountDictionary[resourceType] = 0;
+		}
+	}
+
+	private int GetTotalInventoryAmount() {
+		int total = 0;
+		foreach (int amount in inventoryAmountDictionary.Values) {
+			total += amount;
+		}
+		return total;
+	}
+
+	private bool IsInventoryFull() {
+		return GetTotalInventoryAmount() >= 3;
 	}
 
 	private void UpdateInventoryText() {
-		if (woodInventoryAmount > 0) {
-			inventoryTextMesh.text = "" + woodInventoryAmount;
+		int inventoryAmount = GetTotalInventoryAmount();
+		if (inventoryAmount > 0) {
+			inventoryTextMesh.text = "" + inventoryAmount;
 		} else {
 			inventoryTextMesh.text = "";
 		}
@@ -48,16 +87,21 @@ public class GathererAI : MonoBehaviour {
 
 			case State.GatheringResources:
 				if (unit.isIdle()) {
-					if (woodInventoryAmount >= 3) {
+					if (IsInventoryFull()) {
 						storageTransform = GameHandler.GetStorage_Static();
 						resourceNode = GameHandler.GetResourceNodeNearPosition_Static(resourceNode.GetPosition());
 						state = State.MovingToStorage;
 					} else {
-						unit.PlayAnimationMine(resourceNode.GetPosition(), () => {
-							resourceNode.GrabResource();
-							woodInventoryAmount++;
-							UpdateInventoryText();
-						});
+						switch (resourceNode.GetResourceType()) {
+							case GameResources.ResourceType.Wood:
+								unit.PlayAnimationMine(resourceNode.GetPosition(), GrabResourceFromNode);
+								break;
+
+							case GameResources.ResourceType.Gold:
+								unit.PlayAnimationMine(resourceNode.GetPosition(), GrabResourceFromNode);
+								break;
+
+						}
 					}
 				}
 				break;
@@ -65,9 +109,7 @@ public class GathererAI : MonoBehaviour {
 			case State.MovingToStorage:
 				if (unit.isIdle()) {
 					unit.MoveTo(storageTransform.position, 2.5f, () => {
-						GameResources.AddWoodAmount(woodInventoryAmount);
-						Debug.Log("Gathered " + GameResources.GetWoodAmount() + " wood");
-						woodInventoryAmount = 0;
+						DropInventoryIntoGameResources();
 						UpdateInventoryText();
 						state = State.Idle;
 					});
@@ -78,5 +120,19 @@ public class GathererAI : MonoBehaviour {
 
 	public void SetResouceNode(ResourceNode resourceNode) {
 		if (this.resourceNode == null) this.resourceNode = resourceNode;
+	}
+
+	public void ShowSelectedObject() {
+		transform.Find("SelectedCircle").gameObject.SetActive(true);
+	}
+
+	public void HideSelectedObject() {
+		transform.Find("SelectedCircle").gameObject.SetActive(false);
+	}
+
+	private void GrabResourceFromNode() {
+		GameResources.ResourceType resourceType = resourceNode.GrabResource();
+		inventoryAmountDictionary[resourceType]++;
+		UpdateInventoryText();
 	}
 }

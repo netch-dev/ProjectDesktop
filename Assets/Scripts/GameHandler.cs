@@ -6,31 +6,47 @@ using UnityEngine;
 public class GameHandler : MonoBehaviour {
 	private static GameHandler Instance;
 
-	[SerializeField] private GathererAI gathererAI;
+	[SerializeField] private GathererAI[] gathererAIArray;
+	private GathererAI selectedGathererAI;
 
 	[SerializeField] private Transform[] woodNodeTransformArray;
+	[SerializeField] private Transform[] goldNodeTransformArray;
 	[SerializeField] private Transform storageTransform;
 
 	private List<ResourceNode> resourceNodeList;
 	private void Awake() {
 		Instance = this;
 
+		GameResources.Init();
+
 		resourceNodeList = new List<ResourceNode>();
 		foreach (Transform woodNodeTransform in woodNodeTransformArray) {
-			resourceNodeList.Add(new ResourceNode(woodNodeTransform.transform));
+			resourceNodeList.Add(new ResourceNode(woodNodeTransform.transform, GameResources.ResourceType.Wood));
+		}
+		foreach (Transform goldNodeTransform in goldNodeTransformArray) {
+			resourceNodeList.Add(new ResourceNode(goldNodeTransform.transform, GameResources.ResourceType.Gold));
 		}
 
 		ResourceNode.OnResourceNodeClicked += ResourceNode_OnResourceNodeClicked;
+		GathererAI.OnGathererClicked += GathererAI_OnGathererClicked;
+	}
+
+	private void GathererAI_OnGathererClicked(object sender, EventArgs e) {
+		if (selectedGathererAI != null) selectedGathererAI.HideSelectedObject();
+
+		GathererAI gathererAI = sender as GathererAI;
+		selectedGathererAI = gathererAI;
+		gathererAI.ShowSelectedObject();
 	}
 
 	private void ResourceNode_OnResourceNodeClicked(object sender, EventArgs e) {
-		if (gathererAI == null) {
+		if (selectedGathererAI == null) {
 			Debug.LogError("GathererAI is not set in the GameHandler script.");
 			return;
 		}
 
 		ResourceNode resourceNode = sender as ResourceNode;
-		if (resourceNode != null) gathererAI.SetResouceNode(resourceNode);
+		if (resourceNode != null) selectedGathererAI.SetResouceNode(resourceNode);
 	}
 
 	private ResourceNode GetResourceNode() {
@@ -51,7 +67,7 @@ public class GameHandler : MonoBehaviour {
 	}
 
 	private ResourceNode GetResourceNodeNearPosition(Vector3 position) {
-		float maxDistance = 9f;
+		float maxDistance = 7.5f;
 
 		List<ResourceNode> tempResourceNodeList = new List<ResourceNode>(resourceNodeList);
 		foreach (ResourceNode resourceNode in resourceNodeList) {
