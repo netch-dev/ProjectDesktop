@@ -26,6 +26,11 @@ public static class GameResources {
 		OnResourceAmountChanged?.Invoke(null, EventArgs.Empty);
 	}
 
+	public static void RemoveResourceAmount(ResourceType resourceType, int amount) {
+		resourceAmountDictionary[resourceType] -= amount;
+		OnResourceAmountChanged?.Invoke(null, EventArgs.Empty);
+	}
+
 	public static int GetResourceAmount(ResourceType resourceType) {
 		return resourceAmountDictionary[resourceType];
 	}

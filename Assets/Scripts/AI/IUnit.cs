@@ -6,5 +6,5 @@ using UnityEngine;
 public interface IUnit {
 	bool isIdle();
 	void MoveTo(Vector3 position, float stopDistance, Action onArrivedAtPosition);
-	void PlayAnimationMine(Vector3 lookAtPosition, Action onAnimationCompleted);
+	void PlayAnimationChop(Vector3 lookAtPosition, Action onAnimationCompleted);
 }

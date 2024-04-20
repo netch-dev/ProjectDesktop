@@ -87,20 +87,19 @@ public class GathererAI : MonoBehaviour {
 
 			case State.GatheringResources:
 				if (unit.isIdle()) {
-					if (IsInventoryFull()) {
+					if (IsInventoryFull() || !resourceNode.HasResources()) {
 						storageTransform = GameHandler.GetStorage_Static();
-						resourceNode = GameHandler.GetResourceNodeNearPosition_Static(resourceNode.GetPosition());
+						resourceNode = GameHandler.GetResourceNodeNearPosition_Static(resourceNode.GetPosition(), resourceNode.GetResourceType());
 						state = State.MovingToStorage;
 					} else {
 						switch (resourceNode.GetResourceType()) {
 							case GameResources.ResourceType.Wood:
-								unit.PlayAnimationMine(resourceNode.GetPosition(), GrabResourceFromNode);
+								unit.PlayAnimationChop(resourceNode.GetPosition(), GrabResourceFromNode);
 								break;
 
 							case GameResources.ResourceType.Gold:
-								unit.PlayAnimationMine(resourceNode.GetPosition(), GrabResourceFromNode);
+								unit.PlayAnimationChop(resourceNode.GetPosition(), GrabResourceFromNode);
 								break;
-
 						}
 					}
 				}
@@ -132,7 +131,9 @@ public class GathererAI : MonoBehaviour {
 
 	private void GrabResourceFromNode() {
 		GameResources.ResourceType resourceType = resourceNode.GrabResource();
-		inventoryAmountDictionary[resourceType]++;
-		UpdateInventoryText();
+		if (resourceNode.HasResources()) {
+			inventoryAmountDictionary[resourceType]++;
+			UpdateInventoryText();
+		}
 	}
 }

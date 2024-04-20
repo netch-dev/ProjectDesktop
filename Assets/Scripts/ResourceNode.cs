@@ -1,3 +1,5 @@
+using CodeMonkey;
+using CodeMonkey.Utils;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -10,6 +12,7 @@ public class ResourceNode {
 	private GameResources.ResourceType resourceType;
 
 	private int resourceAmount;
+	private int resourceAmountMax;
 
 	public ResourceNode(Transform resourceNodeTransform, GameResources.ResourceType resourceType) {
 		resourceNodeTransform.GetComponent<ClickableObject>().OnClick += ClickableObjectOnClick;
@@ -17,7 +20,11 @@ public class ResourceNode {
 		this.resourceNodeTransform = resourceNodeTransform;
 		this.resourceType = resourceType;
 
-		this.resourceAmount = 3;
+		this.resourceAmountMax = 3;
+		this.resourceAmount = resourceAmountMax;
+
+		FunctionPeriodic.Create(RegenerateSingleAmount, 6f);
+		CMDebug.TextUpdater(() => resourceAmount.ToString(), resourceNodeTransform.position, resourceNodeTransform);
 	}
 
 	private void ClickableObjectOnClick(object sender, EventArgs e) {
@@ -35,7 +42,11 @@ public class ResourceNode {
 		resourceAmount -= 1;
 
 		if (resourceAmount <= 0) {
+			// Node is depleted
 			ToggleVisuals(false);
+			/*			FunctionTimer.Create(() => {
+							ResetResourceAmount();
+						}, 5f);*/
 		}
 
 		return resourceType;
@@ -50,9 +61,18 @@ public class ResourceNode {
 		}
 	}
 
-	private void RespawnResource() {
-		resourceAmount = 3;
-		ToggleVisuals(true);
+	private void ResetResourceAmount() {
+		if (resourceAmount == 0) ToggleVisuals(true);
+		resourceAmount = resourceAmountMax;
+	}
+
+	private void RegenerateSingleAmount() {
+		if (resourceAmount == 0) ToggleVisuals(true);
+
+		resourceAmount += 1;
+		if (resourceAmount > resourceAmountMax) {
+			resourceAmount = resourceAmountMax;
+		}
 	}
 
 	public bool HasResources() {

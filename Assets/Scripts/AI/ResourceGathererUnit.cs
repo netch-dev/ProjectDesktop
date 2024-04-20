@@ -41,7 +41,7 @@ public class ResourceGathererUnit : MonoBehaviour, IUnit {
 		navMeshAgent.SetDestination(position);
 	}
 
-	public void PlayAnimationMine(Vector3 lookAtPosition, System.Action callback) {
+	public void PlayAnimationChop(Vector3 lookAtPosition, System.Action callback) {
 		StartCoroutine(PlayAnimation(lookAtPosition, callback));
 	}
 

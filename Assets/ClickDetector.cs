@@ -1,14 +1,16 @@
+using CodeMonkey;
 using System;
 using UnityEngine;
 
 public class ClickDetector : MonoBehaviour {
-	public LayerMask clickableLayer; // Specify which layers should be clickable
+	[SerializeField] private LayerMask clickableLayer;
+	[SerializeField] private LayerMask buildableLayer;
+
+	public static event Action<Vector3> OnRightClick;
 
 	private void Update() {
 		// Check for mouse click
 		if (Input.GetMouseButtonDown(0)) {
-			//Debug.Log("Mouse clicked");
-			// Cast a ray from the mouse position into the scene
 			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 			RaycastHit hit;
 
@@ -25,11 +27,23 @@ public class ClickDetector : MonoBehaviour {
 							clickableObject.Clicked();
 						}
 					}
-				} else {
-					Debug.Log("No collider found");
 				}
 			} else {
 				Debug.Log("No hit found, make sure to set the clickable layer");
+			}
+		}
+
+		if (Input.GetMouseButtonDown(1)) {
+			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+			RaycastHit hit;
+
+			if (Physics.Raycast(ray, out hit, Mathf.Infinity, buildableLayer)) {
+				if (hit.collider != null) {
+					GameObject clickedObject = hit.collider.gameObject;
+					OnRightClick?.Invoke(hit.point);
+				}
+			} else {
+				Debug.Log("No hit found, make sure to set the buildable layer");
 			}
 		}
 	}
