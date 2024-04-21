@@ -14,6 +14,8 @@ public class GameHandler : MonoBehaviour {
 	[SerializeField] private Transform[] woodNodeTransformArray;
 	[SerializeField] private Transform[] goldNodeTransformArray;
 	[SerializeField] private Transform storageTransform;
+	[SerializeField] private Transform towerPrefab;
+	[SerializeField] private Transform gathererUnitPrefab;
 
 	private List<ResourceNode> resourceNodeList;
 	private void Awake() {
@@ -37,17 +39,8 @@ public class GameHandler : MonoBehaviour {
 	}
 
 	private void ClickDetector_OnRightClick(Vector3 rightClickPosition) {
-		if (GameResources.GetResourceAmount(GameResources.ResourceType.Wood) >= 10 &&
-			GameResources.GetResourceAmount(GameResources.ResourceType.Gold) >= 10) {
-			// We do have resources
-			Debug.Log("We have resources");
-
-			// Spawn a tower
-			GameResources.RemoveResourceAmount(GameResources.ResourceType.Wood, 10);
-			GameResources.RemoveResourceAmount(GameResources.ResourceType.Gold, 10);
-		} else {
-			// Not enough resources
-			Debug.Log("Not enough resources");
+		if (Tower.TrySpendResourcesCost()) {
+			Tower.Create(towerPrefab, rightClickPosition, () => SpawnGathererUnit(rightClickPosition + new Vector3(4f, 0f, 3f)));
 		}
 	}
 
@@ -64,6 +57,10 @@ public class GameHandler : MonoBehaviour {
 
 		ResourceNode resourceNode = sender as ResourceNode;
 		if (resourceNode != null) selectedGathererAI.SetResouceNode(resourceNode);
+	}
+
+	private void SpawnGathererUnit(Vector3 position) {
+		Instantiate(gathererUnitPrefab, position, Quaternion.identity);
 	}
 
 	private ResourceNode GetResourceNode() {

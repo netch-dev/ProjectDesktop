@@ -24,7 +24,6 @@ public class ResourceNode {
 		this.resourceAmount = resourceAmountMax;
 
 		FunctionPeriodic.Create(RegenerateSingleAmount, 6f);
-		CMDebug.TextUpdater(() => resourceAmount.ToString(), resourceNodeTransform.position, resourceNodeTransform);
 	}
 
 	private void ClickableObjectOnClick(object sender, EventArgs e) {

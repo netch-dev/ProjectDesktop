@@ -56,15 +56,8 @@ public class ResourceGathererUnit : MonoBehaviour, IUnit {
 
 		animator.SetTrigger("Attack_OneHand");
 
-		Debug.Log("Playing animation: " + animator.GetCurrentAnimatorClipInfo(0).Length + "s");
 		yield return new WaitForSeconds(animator.GetCurrentAnimatorClipInfo(0).Length);
-		/*animator.SetInteger("WeaponType_int", 12);
-		animator.SetInteger("MeleeType_int", 1);*/
 
-		//yield return new WaitForSeconds(1.8f);
-
-		/*		animator.SetInteger("WeaponType_int", 0);
-				animator.SetInteger("MeleeType_int", 0);*/
 		isGathering = false;
 		if (callback != null) callback.Invoke();
 	}

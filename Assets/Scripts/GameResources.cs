@@ -17,7 +17,7 @@ public static class GameResources {
 	public static void Init() {
 		resourceAmountDictionary = new Dictionary<ResourceType, int>();
 		foreach (ResourceType resourceType in System.Enum.GetValues(typeof(ResourceType))) {
-			resourceAmountDictionary[resourceType] = 0;
+			resourceAmountDictionary[resourceType] = 999;
 		}
 	}
 
