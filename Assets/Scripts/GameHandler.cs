@@ -35,7 +35,7 @@ public class GameHandler : MonoBehaviour {
 
 		GathererAI.OnGathererClicked += GathererAI_OnGathererClicked;
 
-		ClickDetector.OnRightClick += ClickDetector_OnRightClick;
+		InputManager.OnRightClick += ClickDetector_OnRightClick;
 	}
 
 	private void ClickDetector_OnRightClick(Vector3 rightClickPosition) {
