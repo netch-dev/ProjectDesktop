@@ -130,8 +130,8 @@ public class GathererAI : MonoBehaviour {
 	}
 
 	private void GrabResourceFromNode() {
-		GameResources.ResourceType resourceType = resourceNode.GrabResource();
 		if (resourceNode.HasResources()) {
+			GameResources.ResourceType resourceType = resourceNode.GrabResource();
 			inventoryAmountDictionary[resourceType]++;
 			UpdateInventoryText();
 		}
