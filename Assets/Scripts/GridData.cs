@@ -1,12 +1,9 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Data;
 using UnityEngine;
 
 public class GridData {
 	private Dictionary<Vector3Int, PlacementData> placedObjects = new();
-
 
 	public void AddObjectAt(Vector3Int gridPosition, Vector2Int objectSize, int ID, int placedObjectIndex) {
 		List<Vector3Int> positionToOccupy = CalculatePositions(gridPosition, objectSize);
@@ -44,6 +41,20 @@ public class GridData {
 		}
 
 		return true;
+	}
+
+	public int GetRepresentationIndex(Vector3Int gridPosition) {
+		if (!placedObjects.ContainsKey(gridPosition)) {
+			return -1;
+		} else {
+			return placedObjects[gridPosition].PlacedObjectIndex;
+		}
+	}
+
+	public void RemoveObjectAt(Vector3Int gridPosition) {
+		foreach (Vector3Int position in placedObjects[gridPosition].occupiedPositions) {
+			placedObjects.Remove(position);
+		}
 	}
 }
 

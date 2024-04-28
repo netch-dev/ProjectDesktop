@@ -64,8 +64,8 @@ public class PlacementState : IBuildingState {
 	}
 
 	private bool CanPlace(Vector3Int gridPosition, int selectedObjectIndex) {
-		bool isFloor = objectDatabaseSO.objectDataList[selectedObjectIndex].ID == 0;
-		GridData selectedData = isFloor ? floorData : furnitureData;
+		bool isFloorObjectType = objectDatabaseSO.objectDataList[selectedObjectIndex].ID == 0;
+		GridData selectedData = isFloorObjectType ? floorData : furnitureData;
 
 		return selectedData.CanPlaceObjectAt(gridPosition, objectDatabaseSO.objectDataList[selectedObjectIndex].Size);
 	}

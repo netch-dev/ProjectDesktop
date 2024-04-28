@@ -45,20 +45,28 @@ public class PreviewSystem : MonoBehaviour {
 
 	public void StopShowingPreview() {
 		cellIndicator.SetActive(false);
-		Destroy(previewObject);
+		if (previewObject != null) Destroy(previewObject);
 	}
 
 	public void UpdatePreviewPosition(Vector3 position, bool canPlace) {
-		MovePreview(position);
+		if (previewObject != null) {
+			MovePreview(position);
+			ApplyFeedbackToPreview(canPlace);
+		}
 		MoveCursor(position);
-		ApplyFeedback(canPlace);
+		ApplyFeedbackToCursor(canPlace);
 	}
 
-	private void ApplyFeedback(bool canPlace) {
+	private void ApplyFeedbackToPreview(bool canPlace) {
+		Color color = canPlace ? Color.white : Color.red;
+		color.a = 0.5f;
+		previewMaterialInstance.color = color;
+	}
+
+	private void ApplyFeedbackToCursor(bool canPlace) {
 		Color color = canPlace ? Color.white : Color.red;
 		color.a = 0.5f;
 		cellIndicatorRenderer.material.color = color;
-		previewMaterialInstance.color = color;
 	}
 
 	private void MoveCursor(Vector3 position) {
@@ -67,5 +75,11 @@ public class PreviewSystem : MonoBehaviour {
 
 	private void MovePreview(Vector3 position) {
 		previewObject.transform.position = new Vector3(position.x, position.y + previewYOffset, position.z);
+	}
+
+	public void StartShowingRemovePreview() {
+		cellIndicator.SetActive(true);
+		PrepareCursor(Vector2Int.one);
+		ApplyFeedbackToCursor(false);
 	}
 }

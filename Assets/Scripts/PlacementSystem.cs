@@ -39,13 +39,22 @@ public class PlacementSystem : MonoBehaviour {
 		inputManager.OnExit += StopPlacement;
 	}
 
+	public void StartRemoving() {
+		StopPlacement();
+		gridVisualization.SetActive(true);
+		buildingState = new RemovingState(grid, previewSystem, floorData, furnitureData, objectPlacer);
+
+		inputManager.OnClicked += PlaceStructure;
+		inputManager.OnExit += StopPlacement;
+	}
+
 	private void PlaceStructure() {
 		if (inputManager.IsPointerOverUI()) return;
 
 		Vector3 mousePosition = inputManager.GetSelectedMapPosition();
 		Vector3Int gridPosition = grid.WorldToCell(mousePosition);
 
-		buildingState.OnAction(gridPosition);
+		buildingState?.OnAction(gridPosition);
 	}
 
 	/*	private bool CanPlace(Vector3Int gridPosition, int selectedObjectIndex) {
