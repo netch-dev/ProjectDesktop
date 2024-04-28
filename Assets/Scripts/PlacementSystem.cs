@@ -29,6 +29,7 @@ public class PlacementSystem : MonoBehaviour {
 		furnitureData = new();
 	}
 
+	// Called from the UI
 	public void StartPlacement(int id) {
 		StopPlacement();
 		gridVisualization.SetActive(true);
@@ -39,6 +40,7 @@ public class PlacementSystem : MonoBehaviour {
 		inputManager.OnExit += StopPlacement;
 	}
 
+	// Called from the UI
 	public void StartRemoving() {
 		StopPlacement();
 		gridVisualization.SetActive(true);
