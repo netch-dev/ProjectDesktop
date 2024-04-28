@@ -7,7 +7,7 @@ public class GridData {
 
 	public void AddObjectAt(Vector3Int gridPosition, Vector2Int objectSize, int ID, int placedObjectIndex) {
 		List<Vector3Int> positionToOccupy = CalculatePositions(gridPosition, objectSize);
-		PlacementData data = new PlacementData(ID, placedObjectIndex);
+		PlacementData data = new PlacementData(positionToOccupy, ID, placedObjectIndex);
 
 		foreach (Vector3Int position in positionToOccupy) {
 			if (placedObjects.ContainsKey(position)) {
@@ -59,9 +59,10 @@ public class GridData {
 }
 
 public class PlacementData {
-	public PlacementData(int id, int placedObjectIndex) {
-		ID = id;
-		PlacedObjectIndex = placedObjectIndex;
+	public PlacementData(List<Vector3Int> occupiedPositions, int id, int placedObjectIndex) {
+		this.occupiedPositions = occupiedPositions;
+		this.ID = id;
+		this.PlacedObjectIndex = placedObjectIndex;
 	}
 
 	public List<Vector3Int> occupiedPositions;

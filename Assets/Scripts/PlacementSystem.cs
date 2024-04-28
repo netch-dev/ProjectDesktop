@@ -57,13 +57,6 @@ public class PlacementSystem : MonoBehaviour {
 		buildingState?.OnAction(gridPosition);
 	}
 
-	/*	private bool CanPlace(Vector3Int gridPosition, int selectedObjectIndex) {
-			bool isFloor = objectDatabaseSO.objectDataList[selectedObjectIndex].ID == 0;
-			GridData selectedData = isFloor ? floorData : furnitureData;
-
-			return selectedData.CanPlaceObjectAt(gridPosition, objectDatabaseSO.objectDataList[selectedObjectIndex].Size);
-		}*/
-
 	private void StopPlacement() {
 		if (buildingState == null) return;
 
