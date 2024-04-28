@@ -1,7 +1,6 @@
-using CodeMonkey;
 using System;
-using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class InputManager : MonoBehaviour {
 	[SerializeField] private Camera sceneCamera;
@@ -12,9 +11,13 @@ public class InputManager : MonoBehaviour {
 
 	public static event Action<Vector3> OnRightClick;
 
+	public event Action OnClicked, OnExit;
+
 	private void Update() {
 		// Check for mouse click
 		if (Input.GetMouseButtonDown(0)) {
+			OnClicked?.Invoke();
+
 			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 			RaycastHit hit;
 
@@ -51,6 +54,13 @@ public class InputManager : MonoBehaviour {
 			}
 		}
 
+		if (Input.GetKeyDown(KeyCode.Escape)) {
+			OnExit?.Invoke();
+		}
+	}
+
+	public bool IsPointerOverUI() {
+		return EventSystem.current.IsPointerOverGameObject();
 	}
 
 	public Vector3 GetSelectedMapPosition() {
