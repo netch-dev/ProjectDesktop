@@ -7,7 +7,7 @@ public class CropPlacementState : IBuildingState {
 	private PreviewSystem previewSystem;
 	private ObjectDatabaseSO objectDatabaseSO;
 	private GridData cropPositionData;
-	private ObjectPlacer objectPlacer;
+	private BuildingPlacer objectPlacer;
 
 	public CropPlacementState(
 		int ID,
@@ -15,7 +15,7 @@ public class CropPlacementState : IBuildingState {
 		PreviewSystem previewSystem,
 		ObjectDatabaseSO objectDatabaseSO,
 		GridData cropPositionData,
-		ObjectPlacer objectPlacer) {
+		BuildingPlacer objectPlacer) {
 		this.ID = ID;
 		this.grid = grid;
 		this.previewSystem = previewSystem;

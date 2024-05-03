@@ -9,13 +9,13 @@ public class RemovingState : IBuildingState {
 	private PreviewSystem previewSystem;
 	private GridData floorData;
 	private GridData furnitureData;
-	private ObjectPlacer objectPlacer;
+	private BuildingPlacer objectPlacer;
 
 	public RemovingState(Grid grid,
 					  PreviewSystem previewSystem,
 					  GridData floorData,
 					  GridData furnitureData,
-					  ObjectPlacer objectPlacer) {
+					  BuildingPlacer objectPlacer) {
 		this.grid = grid;
 		this.previewSystem = previewSystem;
 		this.floorData = floorData;

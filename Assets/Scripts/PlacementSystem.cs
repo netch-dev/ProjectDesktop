@@ -19,7 +19,8 @@ public class PlacementSystem : MonoBehaviour {
 	[SerializeField] private PreviewSystem previewSystem;
 	private Vector3Int lastDetectedPosition = Vector3Int.zero;
 
-	[SerializeField] private ObjectPlacer objectPlacer;
+	[SerializeField] private BuildingPlacer buildingPlacer;
+	[SerializeField] private CropPlacer cropPlacer;
 
 	private IBuildingState buildingState;
 
@@ -39,7 +40,7 @@ public class PlacementSystem : MonoBehaviour {
 		// The best way to do this would be to have a separate grid for crops
 		// Or to have a list of available positions for crops and only enable those cells
 
-		buildingState = new CropPlacementState(id, grid, previewSystem, cropObjectDatabase, cropData, objectPlacer);
+		buildingState = new CropPlacementState(id, grid, previewSystem, cropObjectDatabase, cropData, buildingPlacer);
 
 		inputManager.OnClicked += PlaceObject;
 		inputManager.OnExit += StopPlacement;
@@ -55,7 +56,7 @@ public class PlacementSystem : MonoBehaviour {
 		StopPlacement();
 		gridVisualization.SetActive(true);
 
-		buildingState = new BuildingPlacementState(id, grid, previewSystem, buildingObjectDatabase, floorData, buildingData, objectPlacer);
+		buildingState = new BuildingPlacementState(id, grid, previewSystem, buildingObjectDatabase, floorData, buildingData, buildingPlacer);
 
 		inputManager.OnClicked += PlaceObject;
 		inputManager.OnExit += StopPlacement;
@@ -65,7 +66,7 @@ public class PlacementSystem : MonoBehaviour {
 		StopPlacement();
 		gridVisualization.SetActive(true);
 
-		buildingState = new RemovingState(grid, previewSystem, floorData, buildingData, objectPlacer);
+		buildingState = new RemovingState(grid, previewSystem, floorData, buildingData, buildingPlacer);
 
 		inputManager.OnClicked += PlaceObject;
 		inputManager.OnExit += StopPlacement;

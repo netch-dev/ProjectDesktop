@@ -9,7 +9,7 @@ public class BuildingPlacementState : IBuildingState {
 	private ObjectDatabaseSO objectDatabaseSO;
 	private GridData floorData;
 	private GridData furnitureData;
-	private ObjectPlacer objectPlacer;
+	private BuildingPlacer objectPlacer;
 
 	public BuildingPlacementState(int ID,
 						Grid grid,
@@ -17,7 +17,7 @@ public class BuildingPlacementState : IBuildingState {
 						ObjectDatabaseSO objectDatabaseSO,
 						GridData floorData,
 						GridData furnitureData,
-						ObjectPlacer objectPlacer) {
+						BuildingPlacer objectPlacer) {
 		this.ID = ID;
 		this.grid = grid;
 		this.previewSystem = previewSystem;
@@ -47,7 +47,7 @@ public class BuildingPlacementState : IBuildingState {
 			return;
 		}
 
-		int index = objectPlacer.PlaceObject(objectDatabaseSO.objectDataList[selectedObjectIndex].Prefab, grid.CellToWorld(gridPosition));
+		int newObjectIndex = objectPlacer.PlaceObject(objectDatabaseSO.objectDataList[selectedObjectIndex].Prefab, grid.CellToWorld(gridPosition));
 
 		// removed floor check because we arent using floors at this time
 		GridData selectedData = furnitureData;
@@ -56,7 +56,7 @@ public class BuildingPlacementState : IBuildingState {
 			gridPosition,
 			objectDatabaseSO.objectDataList[selectedObjectIndex].Size,
 			objectDatabaseSO.objectDataList[selectedObjectIndex].ID,
-			index);
+			newObjectIndex);
 
 		previewSystem.UpdatePreviewPosition(grid.CellToWorld(gridPosition), canPlace: false); // Position is now invalid after placing here
 	}

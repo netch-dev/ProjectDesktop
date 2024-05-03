@@ -3,8 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// Adding objects and removing them
-public class ObjectPlacer : MonoBehaviour {
+public class BuildingPlacer : MonoBehaviour {
 	[SerializeField] private List<GameObject> placedGameObjectsList = new();
 
 	public int PlaceObject(GameObject prefab, Vector3 position) {
