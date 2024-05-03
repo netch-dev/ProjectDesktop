@@ -22,7 +22,7 @@ public class GameHandler : MonoBehaviour {
 
 		resourceNodeList = new List<ResourceNode>();
 		foreach (Transform woodNodeTransform in woodNodeTransformArray) {
-			resourceNodeList.Add(new ResourceNode(woodNodeTransform.transform, GameResources.ResourceType.Wood));
+			resourceNodeList.Add(new ResourceNode(woodNodeTransform.transform, GameResources.ResourceType.Fuel));
 		}
 		foreach (Transform goldNodeTransform in goldNodeTransformArray) {
 			resourceNodeList.Add(new ResourceNode(goldNodeTransform.transform, GameResources.ResourceType.Gold));

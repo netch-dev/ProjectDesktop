@@ -20,7 +20,7 @@ public class Window_GameResources : MonoBehaviour {
 	}
 
 	private void UpdateResourceTextObject() {
-		if (woodAmountText) woodAmountText.text = GameResources.GetResourceAmount(GameResources.ResourceType.Wood).ToString("N0");
+		if (woodAmountText) woodAmountText.text = GameResources.GetResourceAmount(GameResources.ResourceType.Fuel).ToString("N0");
 		if (goldAmountText) goldAmountText.text = GameResources.GetResourceAmount(GameResources.ResourceType.Gold).ToString("N0");
 	}
 }

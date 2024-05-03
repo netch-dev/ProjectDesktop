@@ -93,7 +93,7 @@ public class GathererAI : MonoBehaviour {
 						state = State.MovingToStorage;
 					} else {
 						switch (resourceNode.GetResourceType()) {
-							case GameResources.ResourceType.Wood:
+							case GameResources.ResourceType.Fuel:
 								unit.PlayAnimationChop(resourceNode.GetPosition(), GrabResourceFromNode);
 								break;
 

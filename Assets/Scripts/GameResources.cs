@@ -8,7 +8,7 @@ public static class GameResources {
 	public static event EventHandler OnResourceAmountChanged;
 
 	public enum ResourceType {
-		Wood,
+		Fuel,
 		Gold
 	}
 

@@ -14,9 +14,9 @@ public class Tower {
 	}
 
 	public static bool TrySpendResourcesCost() {
-		if (GameResources.GetResourceAmount(GameResources.ResourceType.Wood) >= 3 && GameResources.GetResourceAmount(GameResources.ResourceType.Gold) >= 3) {
+		if (GameResources.GetResourceAmount(GameResources.ResourceType.Fuel) >= 3 && GameResources.GetResourceAmount(GameResources.ResourceType.Gold) >= 3) {
 
-			GameResources.RemoveResourceAmount(GameResources.ResourceType.Wood, 3);
+			GameResources.RemoveResourceAmount(GameResources.ResourceType.Fuel, 3);
 			GameResources.RemoveResourceAmount(GameResources.ResourceType.Gold, 3);
 			return true;
 		} else {
