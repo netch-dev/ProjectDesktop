@@ -8,8 +8,8 @@ public static class GameResources {
 	public static event EventHandler OnResourceAmountChanged;
 
 	public enum ResourceType {
+		Gold,
 		Fuel,
-		Gold
 	}
 
 	private static Dictionary<ResourceType, int> resourceAmountDictionary;

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlacementState : IBuildingState {
+public class BuildingPlacementState : IBuildingState {
 
 	private int selectedObjectIndex = -1;
 	private int ID;
@@ -11,14 +11,14 @@ public class PlacementState : IBuildingState {
 	private GridData furnitureData;
 	private ObjectPlacer objectPlacer;
 
-	public PlacementState(int iD,
-					   Grid grid,
-					   PreviewSystem previewSystem,
-					   ObjectDatabaseSO objectDatabaseSO,
-					   GridData floorData,
-					   GridData furnitureData,
-					   ObjectPlacer objectPlacer) {
-		ID = iD;
+	public BuildingPlacementState(int ID,
+						Grid grid,
+						PreviewSystem previewSystem,
+						ObjectDatabaseSO objectDatabaseSO,
+						GridData floorData,
+						GridData furnitureData,
+						ObjectPlacer objectPlacer) {
+		this.ID = ID;
 		this.grid = grid;
 		this.previewSystem = previewSystem;
 		this.objectDatabaseSO = objectDatabaseSO;
@@ -49,8 +49,8 @@ public class PlacementState : IBuildingState {
 
 		int index = objectPlacer.PlaceObject(objectDatabaseSO.objectDataList[selectedObjectIndex].Prefab, grid.CellToWorld(gridPosition));
 
-		bool isFloor = objectDatabaseSO.objectDataList[selectedObjectIndex].ID == 0;
-		GridData selectedData = isFloor ? floorData : furnitureData;
+		// removed floor check because we arent using floors at this time
+		GridData selectedData = furnitureData;
 
 		selectedData.AddObjectAt(
 			gridPosition,
@@ -62,8 +62,8 @@ public class PlacementState : IBuildingState {
 	}
 
 	private bool CanPlace(Vector3Int gridPosition, int selectedObjectIndex) {
-		bool isFloorObjectType = objectDatabaseSO.objectDataList[selectedObjectIndex].ID == 0;
-		GridData selectedData = isFloorObjectType ? floorData : furnitureData;
+		//bool isFloorObjectType = buildingObjectDatabase.objectDataList[selectedObjectIndex].ID == 0;
+		GridData selectedData = furnitureData;
 
 		return selectedData.CanPlaceObjectAt(gridPosition, objectDatabaseSO.objectDataList[selectedObjectIndex].Size);
 	}

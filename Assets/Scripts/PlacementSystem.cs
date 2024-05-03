@@ -7,11 +7,12 @@ public class PlacementSystem : MonoBehaviour {
 	[SerializeField] private InputManager inputManager;
 	[SerializeField] private Grid grid;
 
-	[SerializeField] private ObjectDatabaseSO objectDatabaseSO;
+	[SerializeField] private ObjectDatabaseSO buildingObjectDatabase;
+	[SerializeField] private ObjectDatabaseSO cropObjectDatabase;
 
 	[SerializeField] private GameObject gridVisualization;
 
-	private GridData floorData, furnitureData;
+	private GridData floorData, buildingData, cropData;
 	[SerializeField] private Material WhiteMaterial;
 	[SerializeField] private Material RedMaterial;
 
@@ -26,31 +27,52 @@ public class PlacementSystem : MonoBehaviour {
 		StopPlacement();
 
 		floorData = new();
-		furnitureData = new();
+		buildingData = new();
+		cropData = new();
 	}
 
-	// Called from the UI
-	public void StartPlacement(int id) {
+	#region Crops
+	public void StartCropPlacement(int id) {
 		StopPlacement();
 		gridVisualization.SetActive(true);
+		// Instead of enabling the entire grid, only enable the grid for the available crop positions
+		// The best way to do this would be to have a separate grid for crops
+		// Or to have a list of available positions for crops and only enable those cells
 
-		buildingState = new PlacementState(id, grid, previewSystem, objectDatabaseSO, floorData, furnitureData, objectPlacer);
+		buildingState = new CropPlacementState(id, grid, previewSystem, cropObjectDatabase, cropData, objectPlacer);
 
-		inputManager.OnClicked += PlaceStructure;
+		inputManager.OnClicked += PlaceObject;
 		inputManager.OnExit += StopPlacement;
 	}
 
-	// Called from the UI
-	public void StartRemoving() {
+	public void RemoveCropObject() {
+
+	}
+	#endregion
+
+	#region Buildings
+	public void StartBuildingPlacement(int id) {
 		StopPlacement();
 		gridVisualization.SetActive(true);
-		buildingState = new RemovingState(grid, previewSystem, floorData, furnitureData, objectPlacer);
 
-		inputManager.OnClicked += PlaceStructure;
+		buildingState = new BuildingPlacementState(id, grid, previewSystem, buildingObjectDatabase, floorData, buildingData, objectPlacer);
+
+		inputManager.OnClicked += PlaceObject;
 		inputManager.OnExit += StopPlacement;
 	}
 
-	private void PlaceStructure() {
+	public void RemoveBuildingObject() {
+		StopPlacement();
+		gridVisualization.SetActive(true);
+
+		buildingState = new RemovingState(grid, previewSystem, floorData, buildingData, objectPlacer);
+
+		inputManager.OnClicked += PlaceObject;
+		inputManager.OnExit += StopPlacement;
+	}
+	#endregion
+
+	private void PlaceObject() {
 		if (inputManager.IsPointerOverUI()) return;
 
 		Vector3 mousePosition = inputManager.GetSelectedMapPosition();
@@ -64,7 +86,7 @@ public class PlacementSystem : MonoBehaviour {
 
 		gridVisualization.SetActive(false);
 		buildingState.EndState();
-		inputManager.OnClicked -= PlaceStructure;
+		inputManager.OnClicked -= PlaceObject;
 		inputManager.OnExit -= StopPlacement;
 		buildingState = null;
 	}

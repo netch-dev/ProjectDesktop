@@ -22,7 +22,6 @@ public class GridData {
 		List<Vector3Int> returnValues = new();
 		// Always assuming we're placing objects from the bottom left corner
 		for (int x = 0; x < objectSize.x; x++) {
-
 			for (int y = 0; y < objectSize.y; y++) {
 				returnValues.Add(gridPosition + new Vector3Int(x, 0, y));
 			}
