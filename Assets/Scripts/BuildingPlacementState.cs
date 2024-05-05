@@ -1,7 +1,7 @@
+using System;
 using UnityEngine;
 
 public class BuildingPlacementState : IBuildingState {
-
 	private int selectedObjectIndex = -1;
 	private int ID;
 	private Grid grid;
@@ -18,6 +18,7 @@ public class BuildingPlacementState : IBuildingState {
 						GridData floorData,
 						GridData furnitureData,
 						BuildingPlacer objectPlacer) {
+
 		this.ID = ID;
 		this.grid = grid;
 		this.previewSystem = previewSystem;

@@ -17,15 +17,19 @@ MonoBehaviour:
     <ID>k__BackingField: 0
     <Size>k__BackingField: {x: 4, y: 4}
     <Prefab>k__BackingField: {fileID: 2960020004866690086, guid: ef9dd8b7124744e48bfe8177725ca9f2, type: 3}
+    <IsCropArea>k__BackingField: 1
   - <Name>k__BackingField: 3x3 Planter
     <ID>k__BackingField: 1
     <Size>k__BackingField: {x: 3, y: 3}
     <Prefab>k__BackingField: {fileID: 2142834506488635056, guid: 7175570e2d3627c44a7e01435e4348d1, type: 3}
+    <IsCropArea>k__BackingField: 1
   - <Name>k__BackingField: 2x2 Planter
     <ID>k__BackingField: 2
     <Size>k__BackingField: {x: 2, y: 2}
     <Prefab>k__BackingField: {fileID: 1865860783125734666, guid: 9480430d4feeda7478c49e1d6b7e8554, type: 3}
+    <IsCropArea>k__BackingField: 1
   - <Name>k__BackingField: 1x1 Pot
     <ID>k__BackingField: 3
     <Size>k__BackingField: {x: 1, y: 1}
     <Prefab>k__BackingField: {fileID: 7645527274126236493, guid: 02849df84eb86e1468f48e60c6820229, type: 3}
+    <IsCropArea>k__BackingField: 1
