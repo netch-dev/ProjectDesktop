@@ -1,11 +1,11 @@
-// 2024-05-06 AI-Tag 
-// This was created with assistance from Muse, a Unity Artificial Intelligence product
-
 using System;
 using System.Runtime.InteropServices;
 using UnityEngine;
 
 public class SmallScreenGame : MonoBehaviour {
+#if UNITY_EDITOR
+
+#else
 	[DllImport("user32.dll")]
 	public static extern int SetWindowLong(IntPtr hwnd, int index, int newStyle);
 
@@ -27,6 +27,7 @@ public class SmallScreenGame : MonoBehaviour {
 		// Resize and position the window
 		int width = Screen.currentResolution.width;
 		int height = Screen.currentResolution.height;
-		SetWindowPos(window, IntPtr.Zero, 0, height / 4, width, height / 4, 0x0040);
+		SetWindowPos(window, IntPtr.Zero, 0, 3 * height / 4, width, height / 4, 0x0040);
 	}
+#endif
 }
