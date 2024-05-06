@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections.Generic;
+using UnityEngine;
 
 public class CropPlacementState : IBuildingState {
 	private int selectedObjectIndex = -1;
@@ -6,22 +8,19 @@ public class CropPlacementState : IBuildingState {
 	private Grid grid;
 	private PreviewSystem previewSystem;
 	private ObjectDatabaseSO objectDatabaseSO;
-	private GridData cropPositionData;
-	private BuildingPlacer objectPlacer;
+	private List<CropArea> cropAreaList;
 
 	public CropPlacementState(
 		int ID,
 		Grid grid,
 		PreviewSystem previewSystem,
 		ObjectDatabaseSO objectDatabaseSO,
-		GridData cropPositionData,
-		BuildingPlacer objectPlacer) {
+		List<CropArea> cropAreaList) {
 		this.ID = ID;
 		this.grid = grid;
 		this.previewSystem = previewSystem;
 		this.objectDatabaseSO = objectDatabaseSO;
-		this.cropPositionData = cropPositionData;
-		this.objectPlacer = objectPlacer;
+		this.cropAreaList = cropAreaList;
 
 		selectedObjectIndex = objectDatabaseSO.objectDataList.FindIndex(x => x.ID == ID);
 		if (selectedObjectIndex > -1) {
@@ -40,32 +39,29 @@ public class CropPlacementState : IBuildingState {
 	}
 
 	public void OnAction(Vector3Int gridPosition) {
-		bool canPlace = CanPlace(gridPosition, selectedObjectIndex);
-		if (!canPlace) {
-			// todo play a sound
-			return;
-		}
+		bool canPlace = CanPlace(gridPosition);
+		if (!canPlace) return;
 
-		int index = objectPlacer.PlaceObject(objectDatabaseSO.objectDataList[selectedObjectIndex].Prefab, grid.CellToWorld(gridPosition));
+		CropArea cropArea = GetCropAreaAtPosition(gridPosition);
+		ObjectData objectData = objectDatabaseSO.objectDataList[selectedObjectIndex];
 
-		cropPositionData.AddObjectAt(
-			gridPosition,
-			objectDatabaseSO.objectDataList[selectedObjectIndex].Size,
-			objectDatabaseSO.objectDataList[selectedObjectIndex].ID,
-			index);
+		cropArea.PlaceCrop(objectData.Prefab, grid.CellToWorld(gridPosition));
 
 		previewSystem.UpdatePreviewPosition(grid.CellToWorld(gridPosition), canPlace: false); // Position is now invalid after placing here
 	}
 
-	private bool CanPlace(Vector3Int gridPosition, int selectedObjectIndex) {
-		GridData selectedData = cropPositionData;
-
-		return selectedData.CanPlaceObjectAt(gridPosition, objectDatabaseSO.objectDataList[selectedObjectIndex].Size);
-	}
-
 	public void UpdateState(Vector3Int gridPosition) {
-		bool canPlace = CanPlace(gridPosition, selectedObjectIndex);
+		bool canPlace = CanPlace(gridPosition);
 
 		previewSystem.UpdatePreviewPosition(grid.CellToWorld(gridPosition), canPlace);
+	}
+	private bool CanPlace(Vector3Int gridPosition) {
+		CropArea cropArea = GetCropAreaAtPosition(gridPosition);
+		if (cropArea == null) return false;
+
+		return !cropArea.ContainsCropAtPosition(gridPosition);
+	}
+	private CropArea GetCropAreaAtPosition(Vector3Int position) {
+		return cropAreaList.Find(x => x.ContainsPosition(position));
 	}
 }

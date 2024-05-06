@@ -702,7 +702,6 @@ MonoBehaviour:
   RedMaterial: {fileID: 2100000, guid: 2a829b7e692536041864c9d09112af7d, type: 2}
   previewSystem: {fileID: 960724331}
   buildingPlacer: {fileID: 798139040}
-  cropPlacer: {fileID: 1310229527}
 --- !u!1 &154675996
 GameObject:
   m_ObjectHideFlags: 0
@@ -1027,6 +1026,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 163260774}
   m_CullTransparentMesh: 1
+--- !u!1 &181844340
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 181844342}
+  - component: {fileID: 181844341}
+  m_Layer: 0
+  m_Name: SmallScreenGame
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &181844341
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 181844340}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 199f584266e69134d8428ca4ea704199, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &181844342
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 181844340}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -37.013313, y: 2.9833663, z: -53.534203}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &185131857
 GameObject:
   m_ObjectHideFlags: 0
@@ -6086,7 +6129,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!64 &873475957
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -8825,7 +8868,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be1906b3f3b411f4e992afb83d87980a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  placedGameObjectsList: []
+  placedCropList: []
 --- !u!1001 &1336110191
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13310,7 +13353,7 @@ GameObject:
   - component: {fileID: 1862333329}
   - component: {fileID: 1862333328}
   - component: {fileID: 1862333331}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Grass
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16992,3 +17035,4 @@ SceneRoots:
   - {fileID: 1717557341}
   - {fileID: 5389982580708196965}
   - {fileID: 1999843218}
+  - {fileID: 181844342}

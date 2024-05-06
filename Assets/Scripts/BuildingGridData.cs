@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GridData {
+public class BuildingGridData {
 	private Dictionary<Vector3Int, PlacementData> placedObjects = new();
 
 	public void AddObjectAt(Vector3Int gridPosition, Vector2Int objectSize, int ID, int placedObjectIndex) {

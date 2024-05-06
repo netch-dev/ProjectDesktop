@@ -1,9 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class PlacementSystem : MonoBehaviour {
+	public static Action OnStartCropPlacement;
+	public static Action OnStopCropPlacement;
 
 	[SerializeField] private InputManager inputManager;
 	[SerializeField] private Grid grid;
@@ -13,7 +16,9 @@ public class PlacementSystem : MonoBehaviour {
 
 	[SerializeField] private GameObject gridVisualization;
 
-	private GridData floorData, buildingData, cropData;
+	private BuildingGridData floorGridData, buildingGridData;
+	private List<CropArea> cropAreas;
+
 	[SerializeField] private Material WhiteMaterial;
 	[SerializeField] private Material RedMaterial;
 
@@ -21,30 +26,37 @@ public class PlacementSystem : MonoBehaviour {
 	private Vector3Int lastDetectedPosition = Vector3Int.zero;
 
 	[SerializeField] private BuildingPlacer buildingPlacer;
-	[SerializeField] private CropPlacer cropPlacer;
 
 	private IBuildingState buildingState;
 
 	private void Start() {
 		StopPlacement();
 
-		floorData = new();
-		buildingData = new();
-		cropData = new();
+		floorGridData = new();
+		buildingGridData = new();
+
+		cropAreas = new List<CropArea>();
+		CropArea.OnCropAreaSpawned += (sender, e) => {
+			Debug.Log("CropArea spawned");
+			CropArea cropArea = sender as CropArea;
+			cropAreas.Add(cropArea);
+		};
+		CropArea.OnCropAreaRemoved += (sender, e) => {
+			CropArea cropArea = sender as CropArea;
+			cropAreas.Remove(cropArea);
+		};
 	}
 
 	#region Crops
 	public void StartCropPlacement(int id) {
 		StopPlacement();
-		gridVisualization.SetActive(true);
-		// Instead of enabling the entire grid, only enable the grid for the available crop positions
-		// The best way to do this would be to have a separate grid for crops
-		// Or to have a list of available positions for crops and only enable those cells
 
-		buildingState = new CropPlacementState(id, grid, previewSystem, cropObjectDatabase, cropData, buildingPlacer);
+		OnStartCropPlacement?.Invoke();
+
+		buildingState = new CropPlacementState(id, grid, previewSystem, cropObjectDatabase, cropAreas);
 
 		inputManager.OnClicked += PlaceObject;
-		inputManager.OnExit += StopPlacement;
+		inputManager.OnExit += StopCropPlacement;
 	}
 
 	public void RemoveCropObject() {
@@ -57,7 +69,7 @@ public class PlacementSystem : MonoBehaviour {
 		StopPlacement();
 		gridVisualization.SetActive(true);
 
-		buildingState = new BuildingPlacementState(id, grid, previewSystem, buildingObjectDatabase, floorData, buildingData, buildingPlacer);
+		buildingState = new BuildingPlacementState(id, grid, previewSystem, buildingObjectDatabase, floorGridData, buildingGridData, buildingPlacer);
 
 		inputManager.OnClicked += PlaceObject;
 		inputManager.OnExit += StopPlacement;
@@ -67,7 +79,7 @@ public class PlacementSystem : MonoBehaviour {
 		StopPlacement();
 		gridVisualization.SetActive(true);
 
-		buildingState = new RemovingState(grid, previewSystem, floorData, buildingData, buildingPlacer);
+		buildingState = new RemovingState(grid, previewSystem, floorGridData, buildingGridData, buildingPlacer);
 
 		inputManager.OnClicked += PlaceObject;
 		inputManager.OnExit += StopPlacement;
@@ -91,6 +103,11 @@ public class PlacementSystem : MonoBehaviour {
 		inputManager.OnClicked -= PlaceObject;
 		inputManager.OnExit -= StopPlacement;
 		buildingState = null;
+	}
+	private void StopCropPlacement() {
+		StopPlacement();
+		inputManager.OnExit -= StopCropPlacement;
+		OnStopCropPlacement?.Invoke();
 	}
 
 	private void Update() {

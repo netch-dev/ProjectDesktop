@@ -7,16 +7,16 @@ public class BuildingPlacementState : IBuildingState {
 	private Grid grid;
 	private PreviewSystem previewSystem;
 	private ObjectDatabaseSO objectDatabaseSO;
-	private GridData floorData;
-	private GridData furnitureData;
+	private BuildingGridData floorData;
+	private BuildingGridData furnitureData;
 	private BuildingPlacer objectPlacer;
 
 	public BuildingPlacementState(int ID,
 						Grid grid,
 						PreviewSystem previewSystem,
 						ObjectDatabaseSO objectDatabaseSO,
-						GridData floorData,
-						GridData furnitureData,
+						BuildingGridData floorData,
+						BuildingGridData furnitureData,
 						BuildingPlacer objectPlacer) {
 
 		this.ID = ID;
@@ -51,7 +51,7 @@ public class BuildingPlacementState : IBuildingState {
 		int newObjectIndex = objectPlacer.PlaceObject(objectDatabaseSO.objectDataList[selectedObjectIndex].Prefab, grid.CellToWorld(gridPosition));
 
 		// removed floor check because we arent using floors at this time
-		GridData selectedData = furnitureData;
+		BuildingGridData selectedData = furnitureData;
 
 		selectedData.AddObjectAt(
 			gridPosition,
@@ -64,7 +64,7 @@ public class BuildingPlacementState : IBuildingState {
 
 	private bool CanPlace(Vector3Int gridPosition, int selectedObjectIndex) {
 		//bool isFloorObjectType = buildingObjectDatabase.objectDataList[selectedObjectIndex].ID == 0;
-		GridData selectedData = furnitureData;
+		BuildingGridData selectedData = furnitureData;
 
 		return selectedData.CanPlaceObjectAt(gridPosition, objectDatabaseSO.objectDataList[selectedObjectIndex].Size);
 	}

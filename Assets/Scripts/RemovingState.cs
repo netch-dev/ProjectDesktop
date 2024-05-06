@@ -7,14 +7,14 @@ public class RemovingState : IBuildingState {
 	private int gameObjectIndex = -1;
 	private Grid grid;
 	private PreviewSystem previewSystem;
-	private GridData floorData;
-	private GridData furnitureData;
+	private BuildingGridData floorData;
+	private BuildingGridData furnitureData;
 	private BuildingPlacer objectPlacer;
 
 	public RemovingState(Grid grid,
 					  PreviewSystem previewSystem,
-					  GridData floorData,
-					  GridData furnitureData,
+					  BuildingGridData floorData,
+					  BuildingGridData furnitureData,
 					  BuildingPlacer objectPlacer) {
 		this.grid = grid;
 		this.previewSystem = previewSystem;
@@ -30,7 +30,7 @@ public class RemovingState : IBuildingState {
 	}
 
 	public void OnAction(Vector3Int gridPosition) {
-		GridData selectedData = null;
+		BuildingGridData selectedData = null;
 		if (!furnitureData.CanPlaceObjectAt(gridPosition, Vector2Int.one)) {
 			selectedData = furnitureData;
 		} else if (!floorData.CanPlaceObjectAt(gridPosition, Vector2Int.one)) {
@@ -42,9 +42,7 @@ public class RemovingState : IBuildingState {
 			return;
 		} else {
 			gameObjectIndex = selectedData.GetRepresentationIndex(gridPosition);
-			if (gameObjectIndex == -1) {
-				return;
-			}
+			if (gameObjectIndex == -1) return;
 
 			selectedData.RemoveObjectAt(gridPosition);
 			objectPlacer.RemoveObjectAt(gameObjectIndex);

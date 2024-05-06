@@ -1,6 +1,9 @@
+using System;
 using UnityEngine;
 
-public class CropGrower {
+public class CropGrower : MonoBehaviour {
+	public Action OnCropHarvested;
+
 	[SerializeField] private GameObject parentObject;
 	[SerializeField] private GameObject[] cropStages;
 	[SerializeField] private float secondsToFullyGrow;
@@ -19,9 +22,14 @@ public class CropGrower {
 
 		secondsPerStage = secondsToFullyGrow / cropStages.Length;
 		nextTimeToChange = UnityEngine.Time.timeSinceLevelLoad + nextTimeToChange;
+
+		// Invoke repeating method to grow the crop
+		InvokeRepeating(nameof(TryGrowCrop), 0, 1);
 	}
 
-	public void TryGrowCrop() {
+	private void TryGrowCrop() {
+		if (canHarvestCrop) return;
+
 		bool canGrow = UnityEngine.Time.timeSinceLevelLoad >= nextTimeToChange;
 		if (!canGrow) return;
 
@@ -37,15 +45,23 @@ public class CropGrower {
 		} else {
 			canHarvestCrop = true;
 			Debug.Log($"Crop is fully grown");
+			if (IsInvoking(nameof(TryGrowCrop))) {
+				CancelInvoke(nameof(TryGrowCrop));
+			}
+
+			// todo remove
+			Invoke(nameof(HarvestCrop), 3f);
 		}
 	}
 
 	public void HarvestCrop() {
-		// Give the player some coins
+		OnCropHarvested?.Invoke();
+
 		GameResources.AddResourceAmount(GameResources.ResourceType.Gold, goldAmountForHarvesting);
 
-		// todo create a pooling system for the crops
-		// Destroy the gameobject this script is on
+		if (IsInvoking(nameof(TryGrowCrop))) {
+			CancelInvoke(nameof(TryGrowCrop));
+		}
 		UnityEngine.Object.Destroy(parentObject);
 	}
 
