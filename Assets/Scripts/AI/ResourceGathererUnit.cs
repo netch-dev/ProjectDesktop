@@ -1,8 +1,6 @@
 using System.Collections;
-using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
-using static UnityEngine.GraphicsBuffer;
 
 public class ResourceGathererUnit : MonoBehaviour, IUnit {
 	[SerializeField] private Animator animator;
@@ -62,7 +60,7 @@ public class ResourceGathererUnit : MonoBehaviour, IUnit {
 		if (callback != null) callback.Invoke();
 	}
 
-	public bool isIdle() {
+	public bool IsIdle() {
 		return navMeshAgent.isStopped && !isGathering;
 	}
 }

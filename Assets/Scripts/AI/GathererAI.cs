@@ -78,7 +78,7 @@ public class GathererAI : MonoBehaviour {
 				break;
 
 			case State.MovingToResourceNode:
-				if (unit.isIdle()) {
+				if (unit.IsIdle()) {
 					unit.MoveTo(resourceNode.GetPosition(), 3.7f, () => {
 						state = State.GatheringResources;
 					});
@@ -86,7 +86,7 @@ public class GathererAI : MonoBehaviour {
 				break;
 
 			case State.GatheringResources:
-				if (unit.isIdle()) {
+				if (unit.IsIdle()) {
 					if (IsInventoryFull() || !resourceNode.HasResources()) {
 						storageTransform = GameHandler.GetStorage_Static();
 						resourceNode = GameHandler.GetResourceNodeNearPosition_Static(resourceNode.GetPosition(), resourceNode.GetResourceType());
@@ -106,7 +106,7 @@ public class GathererAI : MonoBehaviour {
 				break;
 
 			case State.MovingToStorage:
-				if (unit.isIdle()) {
+				if (unit.IsIdle()) {
 					unit.MoveTo(storageTransform.position, 2.5f, () => {
 						DropInventoryIntoGameResources();
 						UpdateInventoryText();

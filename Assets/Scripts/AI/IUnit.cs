@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public interface IUnit {
-	bool isIdle();
+	bool IsIdle();
 	void MoveTo(Vector3 position, float stopDistance, Action onArrivedAtPosition);
 	void PlayAnimationChop(Vector3 lookAtPosition, Action onAnimationCompleted);
 }
