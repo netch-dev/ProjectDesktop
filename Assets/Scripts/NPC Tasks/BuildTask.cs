@@ -9,15 +9,12 @@ public class BuildTask : ITask {
 	}
 
 	public bool IsAvailable(NPC npc) {
-		// Check the game handler for bulid that need to be built
-		Debug.Log("Has current building ? " + currentBuilding != null);
-		Debug.Log($"Has building manager instance? {BuildingManager.Instance != null}");
 		return currentBuilding != null || BuildingManager.Instance.HasBuildingWaitingToBeBuilt();
 	}
 
 	public void ExecuteTask(NPC npc) {
 		if (currentBuilding == null) {
-			currentBuilding = BuildingManager.Instance.GetNextBuildingToBuild();
+			currentBuilding = BuildingManager.Instance.GetClosestBuildable(npc.transform.position);
 		}
 
 		if (currentBuilding != null) {
@@ -25,6 +22,7 @@ public class BuildTask : ITask {
 				npc.MoveTo(currentBuilding.transform.position);
 			} else {
 				// Start building
+				animator.SetFloat("WalkSpeed", 0f);
 				currentBuilding.TryToBuild();
 			}
 		}

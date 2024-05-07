@@ -25,7 +25,7 @@ public class BuildingScaffold : MonoBehaviour {
 
 		if (secondsLeftToBuild > 0) {
 			secondsLeftToBuild -= Time.deltaTime;
-			Debug.Log("Building: " + secondsLeftToBuild);
+			Debug.Log("BuildingScriptEnabler: " + secondsLeftToBuild);
 		} else {
 			FinishedBuilding();
 			return true;
@@ -40,7 +40,11 @@ public class BuildingScaffold : MonoBehaviour {
 	}
 
 	private void FinishedBuilding() {
-		Instantiate(finalBuildingPrefab, transform.position, transform.rotation);
+		GameObject buildingGameObject = Instantiate(finalBuildingPrefab, transform.position, transform.rotation);
+
+		// replace the building so it can be removed or moved later
+		BuildingPlacer.Instance.ReplaceBuilding(gameObject, buildingGameObject);
+
 		Destroy(gameObject);
 	}
 }

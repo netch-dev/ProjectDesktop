@@ -28,7 +28,9 @@ public class NPC : MonoBehaviour {
 	}
 
 	public void MoveTo(Vector3 position) {
-		Debug.Log("Moving to: " + position);
+		float walkSpeedNormalized = navMeshAgent.velocity.magnitude / navMeshAgent.speed;
+		animator.SetFloat("WalkSpeed", walkSpeedNormalized);
+
 		navMeshAgent.SetDestination(position);
 	}
 }

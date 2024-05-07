@@ -51,9 +51,9 @@ public class BuildingPlacementState : IBuildingState {
 		int newObjectIndex = objectPlacer.PlaceObject(objectDatabaseSO.objectDataList[selectedObjectIndex].Prefab, grid.CellToWorld(gridPosition));
 
 		// removed floor check because we arent using floors at this time
-		BuildingGridData selectedData = furnitureData;
+		BuildingGridData gridData = furnitureData;
 
-		selectedData.AddObjectAt(
+		gridData.AddObjectAt(
 			gridPosition,
 			objectDatabaseSO.objectDataList[selectedObjectIndex].Size,
 			objectDatabaseSO.objectDataList[selectedObjectIndex].ID,
@@ -64,9 +64,9 @@ public class BuildingPlacementState : IBuildingState {
 
 	private bool CanPlace(Vector3Int gridPosition, int selectedObjectIndex) {
 		//bool isFloorObjectType = buildingObjectDatabase.objectDataList[selectedObjectIndex].ID == 0;
-		BuildingGridData selectedData = furnitureData;
+		BuildingGridData gridData = furnitureData;
 
-		return selectedData.CanPlaceObjectAt(gridPosition, objectDatabaseSO.objectDataList[selectedObjectIndex].Size);
+		return gridData.CanPlaceObjectAt(gridPosition, objectDatabaseSO.objectDataList[selectedObjectIndex].Size);
 	}
 
 	public void UpdateState(Vector3Int gridPosition) {

@@ -5,7 +5,7 @@ using UnityEngine;
 public class BuildingManager : MonoBehaviour {
 	public static BuildingManager Instance;
 
-	private Queue<BuildingScaffold> buildingQueue = new Queue<BuildingScaffold>();
+	private List<BuildingScaffold> pendingBuildingList = new List<BuildingScaffold>();
 
 	private void Awake() {
 		Instance = this;
@@ -18,14 +18,26 @@ public class BuildingManager : MonoBehaviour {
 		AddBuildingToQueue(buildingScaffold);
 	}
 	private void AddBuildingToQueue(BuildingScaffold building) {
-		buildingQueue.Enqueue(building);
+		pendingBuildingList.Add(building);
 	}
 
 	public bool HasBuildingWaitingToBeBuilt() {
-		return buildingQueue.Count > 0;
+		return pendingBuildingList.Count > 0;
 	}
 
-	public BuildingScaffold GetNextBuildingToBuild() {
-		return buildingQueue.Dequeue();
+	public BuildingScaffold GetClosestBuildable(Vector3 currentPosition) {
+		BuildingScaffold closestBuilding = null;
+		float closestDistance = Mathf.Infinity;
+
+		foreach (BuildingScaffold building in pendingBuildingList) {
+			float distance = Vector3.Distance(currentPosition, building.transform.position);
+			if (distance < closestDistance) {
+				closestDistance = distance;
+				closestBuilding = building;
+			}
+		}
+
+		pendingBuildingList.Remove(closestBuilding);
+		return closestBuilding;
 	}
 }
