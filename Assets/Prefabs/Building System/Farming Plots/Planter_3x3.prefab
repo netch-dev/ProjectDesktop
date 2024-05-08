@@ -115,7 +115,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2595734062294692582}
-  - component: {fileID: 8297370045798136530}
+  - component: {fileID: 6459831004498809061}
   m_Layer: 0
   m_Name: Planter_3x3
   m_TagString: Untagged
@@ -139,7 +139,7 @@ Transform:
   - {fileID: 5371381730369655628}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8297370045798136530
+--- !u!114 &6459831004498809061
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -148,7 +148,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2142834506488635056}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd93f743b5e5cac48898115ceef7261e, type: 3}
+  m_Script: {fileID: 11500000, guid: da78d0c90bf5cc044af43f467c59daaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   size: {x: 3, y: 3}

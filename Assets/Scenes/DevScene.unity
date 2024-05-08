@@ -690,10 +690,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 148524599}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2d1e3d7d6685ee0459833477e257afbe, type: 3}
+  m_Script: {fileID: 11500000, guid: 03f4abc7d5298ab48800a507569c0f6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputManager: {fileID: 207054613}
+  inputManager: {fileID: 1007317911}
   grid: {fileID: 1895653284}
   buildingObjectDatabase: {fileID: 11400000, guid: 2fefbc032d5aa6d4fb7e31c31165bd42, type: 2}
   cropObjectDatabase: {fileID: 11400000, guid: 94b78fa1b68d3a9488ba9e0e5fb61aaa, type: 2}
@@ -785,7 +785,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 148524601}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: PlacementSystem, Assembly-CSharp
         m_MethodName: StartPlacement
         m_Mode: 3
@@ -1287,7 +1287,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 148524601}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: PlacementSystem, Assembly-CSharp
         m_MethodName: StartPlacement
         m_Mode: 3
@@ -3520,7 +3520,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 148524601}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: PlacementSystem, Assembly-CSharp
         m_MethodName: StartPlacement
         m_Mode: 3
@@ -4073,7 +4073,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 148524601}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: PlacementSystem, Assembly-CSharp
         m_MethodName: StartRemoving
         m_Mode: 1
@@ -4616,7 +4616,6 @@ Transform:
   - {fileID: 1506101131}
   - {fileID: 960724330}
   - {fileID: 798139038}
-  - {fileID: 1310229526}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &662686294 stripped
@@ -5705,7 +5704,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 798139037}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d427a78355674b645ade9c172d0b9e46, type: 3}
+  m_Script: {fileID: 11500000, guid: 9549927230ef0ec4693fbb5936acadb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   placedGameObjectsList: []
@@ -6668,7 +6667,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 960724329}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 533cacc00819edc4390b79bdfb3d99f4, type: 3}
+  m_Script: {fileID: 11500000, guid: 26f35fc7950e38a4c865ff74577dbd54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   previewYOffset: 0.06
@@ -7262,6 +7261,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1007317910}
+  - component: {fileID: 1007317911}
   m_Layer: 0
   m_Name: InputManager
   m_TagString: Untagged
@@ -7284,6 +7284,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 659285267}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1007317911
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1007317909}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1d1f8787c725764eb1bbeca00087670, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneCamera: {fileID: 963194227}
+  buildableLayer:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!1 &1022616963
 GameObject:
   m_ObjectHideFlags: 0
@@ -7367,7 +7383,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 148524601}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: PlacementSystem, Assembly-CSharp
         m_MethodName: StartPlacement
         m_Mode: 3
@@ -8858,50 +8874,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1304552070}
   m_CullTransparentMesh: 1
---- !u!1 &1310229525
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1310229526}
-  - component: {fileID: 1310229527}
-  m_Layer: 0
-  m_Name: CropPlacer
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1310229526
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1310229525}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 659285267}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1310229527
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1310229525}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: be1906b3f3b411f4e992afb83d87980a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1336110191
 PrefabInstance:
   m_ObjectHideFlags: 0

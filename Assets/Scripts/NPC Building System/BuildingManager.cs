@@ -8,6 +8,9 @@ public class BuildingManager : MonoBehaviour {
 	private List<BuildingScaffold> pendingBuildingList = new List<BuildingScaffold>();
 
 	private void Awake() {
+		if (Instance != null) {
+			Debug.LogError("There are multiple BuildingManager scripts in the scene");
+		}
 		Instance = this;
 
 		BuildingScaffold.OnBuildingPlaced += BuildingScaffold_OnBuildingPlaced;
