@@ -7,8 +7,13 @@ using UnityEngine;
 public class BuildingScaffold : MonoBehaviour {
 	public static event EventHandler OnBuildingPlaced;
 
+	public event EventHandler<ProgressChangedEventArgs> OnProgressChanged;
+	public class ProgressChangedEventArgs : EventArgs {
+		public float progressNormalized { get; set; }
+	}
+
 	[SerializeField] private GameObject finalBuildingPrefab;
-	[SerializeField] private float secondsToBuild;
+	[SerializeField] private float secondsToBuildMax;
 
 	private bool isCurrentlyBuilding;
 	private float secondsLeftToBuild;
@@ -23,9 +28,9 @@ public class BuildingScaffold : MonoBehaviour {
 			StartBuilding();
 		}
 
-		if (secondsLeftToBuild > 0) {
-			secondsLeftToBuild -= Time.deltaTime;
-			Debug.Log("BuildingScriptEnabler: " + secondsLeftToBuild);
+		if (secondsLeftToBuild < secondsToBuildMax) {
+			secondsLeftToBuild += Time.deltaTime;
+			OnProgressChanged?.Invoke(this, new ProgressChangedEventArgs { progressNormalized = secondsLeftToBuild / secondsToBuildMax });
 		} else {
 			FinishedBuilding();
 			return true;
@@ -35,7 +40,8 @@ public class BuildingScaffold : MonoBehaviour {
 	}
 
 	private void StartBuilding() {
-		secondsLeftToBuild = secondsToBuild;
+		secondsLeftToBuild = 0;
+		OnProgressChanged?.Invoke(this, new ProgressChangedEventArgs { progressNormalized = 0 });
 		isCurrentlyBuilding = true;
 	}
 

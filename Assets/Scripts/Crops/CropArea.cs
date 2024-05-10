@@ -34,12 +34,12 @@ public class CropArea : MonoBehaviour {
 			}
 		}
 
-		foreach (Vector3 cropSlot in cropSlots) {
-			GameObject visual = Instantiate(testVisualObjectPrefab, cropSlot + Vector3.up, Quaternion.identity);
-			visual.transform.SetParent(transform);
-			visual.SetActive(false);
-			visualGameObjects.Add(visual);
-		}
+		/*		foreach (Vector3 cropSlot in cropSlots) {
+					GameObject visual = Instantiate(testVisualObjectPrefab, cropSlot + Vector3.up, Quaternion.identity);
+					visual.transform.SetParent(transform);
+					visual.SetActive(false);
+					visualGameObjects.Add(visual);
+				}*/
 	}
 
 	private void PlacementSystemOnStopCropPlacement() {

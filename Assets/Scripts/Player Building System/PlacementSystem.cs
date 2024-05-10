@@ -37,7 +37,6 @@ public class PlacementSystem : MonoBehaviour {
 
 		cropAreas = new List<CropArea>();
 		CropArea.OnCropAreaSpawned += (sender, e) => {
-			Debug.Log("CropArea spawned");
 			CropArea cropArea = sender as CropArea;
 			cropAreas.Add(cropArea);
 		};

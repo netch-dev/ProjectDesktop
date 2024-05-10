@@ -17,15 +17,19 @@ MonoBehaviour:
     <ID>k__BackingField: 0
     <Size>k__BackingField: {x: 4, y: 4}
     <Prefab>k__BackingField: {fileID: 3433622799529364963, guid: 6ec798108057d3e4b8216c1ad6956edc, type: 3}
+    <PlacementGhostPrefab>k__BackingField: {fileID: 8672492237553853672, guid: 905cc05d20be9c9429b6c7957e9048b7, type: 3}
   - <Name>k__BackingField: 3x3 Planter
     <ID>k__BackingField: 1
     <Size>k__BackingField: {x: 3, y: 3}
     <Prefab>k__BackingField: {fileID: 470669289203503706, guid: dcf22e44cf16cd34d9d0138ed507650b, type: 3}
+    <PlacementGhostPrefab>k__BackingField: {fileID: 8522239404965724822, guid: bb1a932f83959704499da5beae654d42, type: 3}
   - <Name>k__BackingField: 2x2 Planter
     <ID>k__BackingField: 2
     <Size>k__BackingField: {x: 2, y: 2}
     <Prefab>k__BackingField: {fileID: 8296518229106931981, guid: 1affc277cd19d124b974d5ccc88262ae, type: 3}
+    <PlacementGhostPrefab>k__BackingField: {fileID: 2626560693916959991, guid: 52a5c27a33486ac4c931e876798d5918, type: 3}
   - <Name>k__BackingField: 1x1 Pot
     <ID>k__BackingField: 3
     <Size>k__BackingField: {x: 1, y: 1}
     <Prefab>k__BackingField: {fileID: 3119485442123551659, guid: d01a9e5c279c9be429d7b1dc42f724ee, type: 3}
+    <PlacementGhostPrefab>k__BackingField: {fileID: 6944996597771698017, guid: e477213a192af76499b7d51699e7355f, type: 3}

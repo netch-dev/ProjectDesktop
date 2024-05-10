@@ -30,7 +30,7 @@ public class BuildingPlacementState : IBuildingState {
 		selectedObjectIndex = objectDatabaseSO.objectDataList.FindIndex(x => x.ID == ID);
 		if (selectedObjectIndex > -1) {
 			previewSystem.StartShowingPlacementPreview(
-				objectDatabaseSO.objectDataList[selectedObjectIndex].Prefab,
+				objectDatabaseSO.objectDataList[selectedObjectIndex].PlacementGhostPrefab,
 				objectDatabaseSO.objectDataList[selectedObjectIndex].Size);
 		} else {
 			throw new System.Exception($"Object ID not found in the database - {ID}");
