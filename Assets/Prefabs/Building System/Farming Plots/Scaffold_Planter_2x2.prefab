@@ -153,7 +153,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   finalBuildingPrefab: {fileID: 1865860783125734666, guid: 9480430d4feeda7478c49e1d6b7e8554, type: 3}
-  secondsToBuildMax: 5
+  secondsToBuildMax: 1
 --- !u!1001 &4644508169591497729
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -228,7 +228,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6496753352069228683, guid: 22751716b72840d449176b2bd18e06d7, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 2
+      value: 3.5
       objectReference: {fileID: 0}
     - target: {fileID: 6496753352069228683, guid: 22751716b72840d449176b2bd18e06d7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

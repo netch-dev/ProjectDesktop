@@ -10,6 +10,7 @@ public class NPC : MonoBehaviour {
 
 	private void Awake() {
 		taskList.Add(new BuildTask(animator));
+		taskList.Add(new HarvestTask(animator));
 		taskList.Add(new WaterPlantsTask());
 	}
 
@@ -20,7 +21,6 @@ public class NPC : MonoBehaviour {
 	private void PerformTask() {
 		foreach (ITask task in taskList) {
 			if (task.IsAvailable(this)) {
-				Debug.Log("Performing task: " + task.GetType().Name);
 				task.ExecuteTask(this);
 				break;
 			}

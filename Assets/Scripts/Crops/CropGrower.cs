@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 
 public class CropGrower : MonoBehaviour {
+	public static event EventHandler OnCropFullyGrown;
 	public Action OnCropHarvested;
 
 	[SerializeField] private GameObject parentObject;
@@ -21,7 +22,7 @@ public class CropGrower : MonoBehaviour {
 		}
 
 		secondsPerStage = secondsToFullyGrow / cropStages.Length;
-		nextTimeToChange = UnityEngine.Time.timeSinceLevelLoad + nextTimeToChange;
+		nextTimeToChange = UnityEngine.Time.timeSinceLevelLoad + secondsToFullyGrow;
 
 		// Invoke repeating method to grow the crop
 		InvokeRepeating(nameof(TryGrowCrop), 0, 1);
@@ -44,13 +45,10 @@ public class CropGrower : MonoBehaviour {
 			nextTimeToChange = UnityEngine.Time.timeSinceLevelLoad + secondsPerStage;
 		} else {
 			canHarvestCrop = true;
-			Debug.Log($"Crop is fully grown");
 			if (IsInvoking(nameof(TryGrowCrop))) {
 				CancelInvoke(nameof(TryGrowCrop));
 			}
-
-			// todo remove
-			Invoke(nameof(HarvestCrop), 3f);
+			OnCropFullyGrown?.Invoke(this, EventArgs.Empty);
 		}
 	}
 

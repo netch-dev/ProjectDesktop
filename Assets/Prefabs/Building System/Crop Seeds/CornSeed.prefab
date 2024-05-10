@@ -54,7 +54,7 @@ MonoBehaviour:
   - {fileID: 4618045407039417096}
   - {fileID: 1357470176564774623}
   - {fileID: 5532231911299030329}
-  secondsToFullyGrow: 10
+  secondsToFullyGrow: 2
   goldAmountForHarvesting: 100
 --- !u!1001 &1356249146102338555
 PrefabInstance:

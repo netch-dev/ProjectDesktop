@@ -8,9 +8,7 @@ public class BuildingManager : MonoBehaviour {
 	private List<BuildingScaffold> pendingBuildingList = new List<BuildingScaffold>();
 
 	private void Awake() {
-		if (Instance != null) {
-			Debug.LogError("There are multiple BuildingManager scripts in the scene");
-		}
+		if (Instance != null) Debug.LogError("There are multiple BuildingManager scripts in the scene");
 		Instance = this;
 
 		BuildingScaffold.OnBuildingPlaced += BuildingScaffold_OnBuildingPlaced;
@@ -18,10 +16,7 @@ public class BuildingManager : MonoBehaviour {
 
 	private void BuildingScaffold_OnBuildingPlaced(object sender, EventArgs e) {
 		BuildingScaffold buildingScaffold = sender as BuildingScaffold;
-		AddBuildingToQueue(buildingScaffold);
-	}
-	private void AddBuildingToQueue(BuildingScaffold building) {
-		pendingBuildingList.Add(building);
+		pendingBuildingList.Add(buildingScaffold);
 	}
 
 	public bool HasBuildingWaitingToBeBuilt() {
