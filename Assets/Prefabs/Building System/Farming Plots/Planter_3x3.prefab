@@ -154,3 +154,4 @@ MonoBehaviour:
   size: {x: 3, y: 3}
   gridSize: 1
   testVisualObjectPrefab: {fileID: 267503016881008502, guid: 47907bf446f8ebb499af0d5e7aeda4e8, type: 3}
+  plantPositionOffset: {x: 0, y: 0.295, z: 0}

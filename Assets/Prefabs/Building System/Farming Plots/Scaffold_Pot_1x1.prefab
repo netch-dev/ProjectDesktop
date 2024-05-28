@@ -153,7 +153,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   finalBuildingPrefab: {fileID: 7645527274126236493, guid: 02849df84eb86e1468f48e60c6820229, type: 3}
-  secondsToBuildMax: 3
+  secondsToBuildMax: 0.1
 --- !u!1001 &4305703737582125929
 PrefabInstance:
   m_ObjectHideFlags: 0

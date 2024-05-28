@@ -12,6 +12,10 @@ public class BuildTask : ITask {
 		return currentBuilding != null || BuildingManager.Instance.HasBuildingWaitingToBeBuilt();
 	}
 
+	public bool IsComplete(NPC npc) {
+		return currentBuilding == null;
+	}
+
 	public void ExecuteTask(NPC npc) {
 		if (currentBuilding == null) {
 			currentBuilding = BuildingManager.Instance.GetClosestBuildable(npc.transform.position);
@@ -26,6 +30,10 @@ public class BuildTask : ITask {
 				currentBuilding.TryToBuild();
 			}
 		}
+	}
+
+	public override string ToString() {
+		return "BuildTask 123";
 	}
 }
 

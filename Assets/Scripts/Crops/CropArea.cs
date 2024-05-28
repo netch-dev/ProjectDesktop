@@ -10,6 +10,7 @@ public class CropArea : MonoBehaviour {
 	[SerializeField] private Vector2Int size;
 	[SerializeField] private int gridSize = 1;
 	[SerializeField] private GameObject testVisualObjectPrefab;
+	[SerializeField] private Vector3 plantPositionOffset;
 
 	private List<Vector3> cropSlots = new List<Vector3>();
 
@@ -64,7 +65,7 @@ public class CropArea : MonoBehaviour {
 	}
 
 	public void PlaceCrop(GameObject cropPrefab, Vector3 position) {
-		GameObject newCrop = Instantiate(cropPrefab, position, Quaternion.identity);
+		GameObject newCrop = Instantiate(cropPrefab, position + plantPositionOffset, Quaternion.identity);
 		CropGrower cropGrower = newCrop.GetComponent<CropGrower>();
 		cropGrower.InitCrop();
 		plantedCrops.Add(position, cropGrower);
@@ -73,6 +74,12 @@ public class CropArea : MonoBehaviour {
 			plantedCrops.Remove(position);
 		};
 
+		// todo subscribe to the water action here after moving the water levels to the area
+
 		Debug.Log($"Planted crop at {position} ({plantedCrops.Count} total)");
+	}
+
+	public Vector3 GetCropPositionOffset() {
+		return plantPositionOffset;
 	}
 }

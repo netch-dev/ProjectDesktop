@@ -7,12 +7,16 @@ public class HarvestTask : ITask {
 		this.animator = animator;
 	}
 	public bool IsAvailable(NPC npc) {
-		return currentCrop != null || HarvestManager.Instance.HasCropsWaitingToBeHarvested();
+		return currentCrop != null || CropManager.Instance.HasCropsWaitingToBeHarvested();
+	}
+
+	public bool IsComplete(NPC npc) {
+		return currentCrop == null || !currentCrop.CanHarvestCrop();
 	}
 
 	public void ExecuteTask(NPC npc) {
 		if (currentCrop == null) {
-			currentCrop = HarvestManager.Instance.GetClosestHarvestable(npc.transform.position);
+			currentCrop = CropManager.Instance.GetClosestHarvestable(npc.transform.position);
 		}
 
 		if (currentCrop != null) {
@@ -24,6 +28,9 @@ public class HarvestTask : ITask {
 				currentCrop.HarvestCrop();
 			}
 		}
+	}
+	public override string ToString() {
+		return $"Harvest Task\nCrop: {currentCrop?.gameObject.name}";
 	}
 }
 

@@ -24,9 +24,9 @@ public class CropPlacementState : IBuildingState {
 
 		selectedObjectIndex = objectDatabaseSO.objectDataList.FindIndex(x => x.ID == ID);
 		if (selectedObjectIndex > -1) {
-			previewSystem.StartShowingPlacementPreview(
-				objectDatabaseSO.objectDataList[selectedObjectIndex].PlacementGhostPrefab,
-				objectDatabaseSO.objectDataList[selectedObjectIndex].Size);
+			GameObject prefab = objectDatabaseSO.objectDataList[selectedObjectIndex].Prefab;
+			Vector2Int size = objectDatabaseSO.objectDataList[selectedObjectIndex].Size;
+			previewSystem.StartShowingPlacementPreview(prefab, size);
 		} else {
 			throw new System.Exception($"Object ID not found in the database - {ID}");
 		}
@@ -47,13 +47,19 @@ public class CropPlacementState : IBuildingState {
 
 		cropArea.PlaceCrop(objectData.Prefab, grid.CellToWorld(gridPosition));
 
-		previewSystem.UpdatePreviewPosition(grid.CellToWorld(gridPosition), canPlace: false); // Position is now invalid after placing here
+		previewSystem.UpdatePreviewPosition(grid.CellToWorld(gridPosition) + cropArea.GetCropPositionOffset(), canPlace: false); // Position is now invalid after placing here
 	}
 
 	public void UpdateState(Vector3Int gridPosition) {
 		bool canPlace = CanPlace(gridPosition);
+		Vector3 previewPosition = grid.CellToWorld(gridPosition);
 
-		previewSystem.UpdatePreviewPosition(grid.CellToWorld(gridPosition), canPlace);
+		CropArea cropArea = GetCropAreaAtPosition(gridPosition);
+		if (cropArea != null) {
+			previewPosition += cropArea.GetCropPositionOffset();
+		}
+
+		previewSystem.UpdatePreviewPosition(previewPosition, canPlace);
 	}
 	private bool CanPlace(Vector3Int gridPosition) {
 		CropArea cropArea = GetCropAreaAtPosition(gridPosition);

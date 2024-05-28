@@ -12,6 +12,6 @@ public class ProgressBarUI : MonoBehaviour {
 
 	private void BuildingScaffold_UpdateProgress(object sender, BuildingScaffold.ProgressChangedEventArgs e) {
 		barImage.fillAmount = e.progressNormalized;
-		Debug.Log("Progress: " + e.progressNormalized);
+		//Debug.Log("Progress: " + e.progressNormalized);
 	}
 }
