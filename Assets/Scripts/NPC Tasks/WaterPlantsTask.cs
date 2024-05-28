@@ -3,18 +3,26 @@ using UnityEngine;
 
 public class WaterPlantsTask : ITask {
 	private Animator animator;
+	private bool shouldWaterEntireArea;
+
 	private CropGrower currentCrop = null;
 	private bool isCurrentlyWatering = false;
 
-	public WaterPlantsTask(NPC npc, Animator animator) {
+	public WaterPlantsTask(NPC npc, Animator animator, bool shouldWaterEntireArea) {
 		npc.OnAnimationCompleted += () => {
-			Debug.Log("Plant watered");
-			currentCrop.WaterCrop();
+			if (shouldWaterEntireArea) {
+				Debug.Log("Watering entire area...");
+				currentCrop.cropArea.WaterCropArea();
+			} else {
+				Debug.Log("Watering single crop...");
+				currentCrop.WaterCrop();
+			}
 			currentCrop = null;
 			isCurrentlyWatering = false;
 		};
 
 		this.animator = animator;
+		this.shouldWaterEntireArea = shouldWaterEntireArea;
 	}
 	public bool IsAvailable(NPC npc) {
 		return currentCrop != null || CropManager.Instance.HasCropsWaitingToBeWatered();
@@ -35,7 +43,7 @@ public class WaterPlantsTask : ITask {
 		}
 
 		if (currentCrop != null) {
-			if (Vector3.Distance(npc.transform.position, currentCrop.transform.position) > 5f) {
+			if (Vector3.Distance(npc.transform.position, currentCrop.transform.position) > 4f) {
 				npc.MoveTo(currentCrop.transform.position);
 			} else {
 				WaterPlant(npc, currentCrop.transform.position);
@@ -54,7 +62,7 @@ public class WaterPlantsTask : ITask {
 	}
 
 	public override string ToString() {
-		return "WaterPlantsTask 123";
+		return $"WaterPlantsTask\nCrop at {currentCrop?.transform.position}";
 	}
 }
 

@@ -2702,15 +2702,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4097871005362856, guid: 67762d8bd3734a7438c2df391d2709de, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -25.220081
+      value: -32
       objectReference: {fileID: 0}
     - target: {fileID: 4097871005362856, guid: 67762d8bd3734a7438c2df391d2709de, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.227
       objectReference: {fileID: 0}
     - target: {fileID: 4097871005362856, guid: 67762d8bd3734a7438c2df391d2709de, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -65.17832
+      value: -47
       objectReference: {fileID: 0}
     - target: {fileID: 4097871005362856, guid: 67762d8bd3734a7438c2df391d2709de, type: 3}
       propertyPath: m_LocalRotation.w
@@ -31590,6 +31590,10 @@ PrefabInstance:
     - target: {fileID: 5667521285862751304, guid: 01642f4e79ee21944965755950888482, type: 3}
       propertyPath: m_Name
       value: TaskNPC
+      objectReference: {fileID: 0}
+    - target: {fileID: 7110193089531439312, guid: 01642f4e79ee21944965755950888482, type: 3}
+      propertyPath: m_StoppingDistance
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8678252268997959498, guid: 01642f4e79ee21944965755950888482, type: 3}
       propertyPath: m_LocalPosition.x

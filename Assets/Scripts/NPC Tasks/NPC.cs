@@ -19,7 +19,7 @@ public class NPC : MonoBehaviour {
 	private void Awake() {
 		taskList.Add(new BuildTask(animator));
 		taskList.Add(new HarvestTask(animator));
-		taskList.Add(new WaterPlantsTask(this, animator));
+		taskList.Add(new WaterPlantsTask(this, animator, shouldWaterEntireArea: true));
 	}
 
 	private void Update() {
@@ -31,6 +31,7 @@ public class NPC : MonoBehaviour {
 			if (currentTask.IsComplete(this)) {
 				currentTask = null;
 			} else {
+				Debug.Log("Still executing " + currentTask.GetType().ToString());
 				currentTask.ExecuteTask(this);
 				return;
 			}

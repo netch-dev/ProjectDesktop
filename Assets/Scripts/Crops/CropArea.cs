@@ -67,7 +67,7 @@ public class CropArea : MonoBehaviour {
 	public void PlaceCrop(GameObject cropPrefab, Vector3 position) {
 		GameObject newCrop = Instantiate(cropPrefab, position + plantPositionOffset, Quaternion.identity);
 		CropGrower cropGrower = newCrop.GetComponent<CropGrower>();
-		cropGrower.InitCrop();
+		cropGrower.InitCrop(this);
 		plantedCrops.Add(position, cropGrower);
 
 		cropGrower.OnCropHarvested += () => {
@@ -77,6 +77,14 @@ public class CropArea : MonoBehaviour {
 		// todo subscribe to the water action here after moving the water levels to the area
 
 		Debug.Log($"Planted crop at {position} ({plantedCrops.Count} total)");
+	}
+
+	public void WaterCropArea() {
+		foreach (KeyValuePair<Vector3, CropGrower> crop in plantedCrops) {
+			if (crop.Value.CanWaterCrop()) {
+				crop.Value.WaterCrop();
+			}
+		}
 	}
 
 	public Vector3 GetCropPositionOffset() {

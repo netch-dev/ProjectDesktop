@@ -29,6 +29,8 @@ public class BuildTask : ITask {
 				animator.SetFloat("WalkSpeed", 0f);
 				currentBuilding.TryToBuild();
 			}
+		} else {
+			Debug.Log("No building to build");
 		}
 	}
 

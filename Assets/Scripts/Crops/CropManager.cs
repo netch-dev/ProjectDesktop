@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class CropManager : MonoBehaviour {
@@ -51,6 +52,13 @@ public class CropManager : MonoBehaviour {
 	public CropGrower GetClosestCropThatNeedsWater(Vector3 currentPosition) {
 		CropGrower closestCrop = null;
 		float closestDistance = Mathf.Infinity;
+
+		// Remove crops that don't need water anymore - In case the area is watered
+		foreach (CropGrower crop in needsWaterCropList.ToList()) {
+			if (!crop.CanWaterCrop()) {
+				needsWaterCropList.Remove(crop);
+			}
+		}
 
 		foreach (CropGrower crop in needsWaterCropList) {
 			float distance = Vector3.Distance(currentPosition, crop.transform.position);

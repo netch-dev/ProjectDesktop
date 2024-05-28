@@ -11,6 +11,7 @@ public class HarvestTask : ITask {
 	}
 
 	public bool IsComplete(NPC npc) {
+		Debug.Log($"Checking if harvest task is complete | currentCrop {currentCrop} | canHarvest: {currentCrop?.CanHarvestCrop()}");
 		return currentCrop == null || !currentCrop.CanHarvestCrop();
 	}
 
@@ -26,6 +27,7 @@ public class HarvestTask : ITask {
 				// Start harvesting
 				animator.SetFloat("WalkSpeed", 0f);
 				currentCrop.HarvestCrop();
+				currentCrop = null;
 			}
 		}
 	}
