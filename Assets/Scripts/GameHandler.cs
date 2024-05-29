@@ -10,6 +10,7 @@ public class GameHandler : MonoBehaviour {
 
 	[SerializeField] private Transform[] woodNodeTransformArray;
 	[SerializeField] private Transform[] goldNodeTransformArray;
+	[SerializeField] private Transform[] waterNodeTransformArray;
 	[SerializeField] private Transform storageTransform;
 	[SerializeField] private Transform towerPrefab;
 	[SerializeField] private Transform gathererUnitPrefab;
@@ -101,5 +102,23 @@ public class GameHandler : MonoBehaviour {
 	}
 	public static Transform GetStorage_Static() {
 		return Instance.GetStorage();
+	}
+
+	private Transform GetClosestWaterNode(Vector3 position) {
+		Transform closestWaterNode = null;
+		float closestDistance = Mathf.Infinity;
+
+		foreach (Transform waterNodeTransform in waterNodeTransformArray) {
+			float distance = Vector3.Distance(position, waterNodeTransform.position);
+			if (distance < closestDistance) {
+				closestDistance = distance;
+				closestWaterNode = waterNodeTransform;
+			}
+		}
+
+		return closestWaterNode;
+	}
+	public static Transform GetClosestWaterNode_Static(Vector3 position) {
+		return Instance.GetClosestWaterNode(position);
 	}
 }

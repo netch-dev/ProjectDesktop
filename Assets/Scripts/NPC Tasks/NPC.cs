@@ -1,3 +1,4 @@
+using RootMotion.FinalIK;
 using System;
 using System.Collections.Generic;
 using TMPro;
@@ -7,7 +8,9 @@ using UnityEngine.AI;
 public class NPC : MonoBehaviour {
 	[SerializeField] private Animator animator;
 	[SerializeField] private NavMeshAgent navMeshAgent;
+
 	[SerializeField] private GameObject wateringCan;
+	[SerializeField] private FullBodyBipedIK fullBodyBipedIK;
 
 	[SerializeField] private TextMeshProUGUI debugTextMesh;
 
@@ -19,7 +22,7 @@ public class NPC : MonoBehaviour {
 	private void Awake() {
 		taskList.Add(new BuildTask(animator));
 		taskList.Add(new HarvestTask(animator));
-		taskList.Add(new WaterPlantsTask(this, animator, shouldWaterEntireArea: true));
+		taskList.Add(new WaterPlantsTask(this, animator, reduceAmountPerWateringRun: 25));
 	}
 
 	private void Update() {
@@ -31,7 +34,7 @@ public class NPC : MonoBehaviour {
 			if (currentTask.IsComplete(this)) {
 				currentTask = null;
 			} else {
-				Debug.Log("Still executing " + currentTask.GetType().ToString());
+				debugTextMesh.text = $"Task: {currentTask.ToString()}";
 				currentTask.ExecuteTask(this);
 				return;
 			}

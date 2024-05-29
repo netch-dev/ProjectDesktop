@@ -66,7 +66,9 @@ public class CropGrower : MonoBehaviour {
 			cropStages[currentStage].SetActive(true);
 
 			nextTimeToChange = UnityEngine.Time.timeSinceLevelLoad + secondsPerStage;
-		} else {
+		}
+
+		if (currentStage == cropStages.Length - 1) {
 			canHarvestCrop = true;
 			if (IsInvoking(nameof(TryGrowCrop))) {
 				CancelInvoke(nameof(TryGrowCrop));

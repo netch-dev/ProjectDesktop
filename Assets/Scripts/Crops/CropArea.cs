@@ -9,14 +9,13 @@ public class CropArea : MonoBehaviour {
 
 	[SerializeField] private Vector2Int size;
 	[SerializeField] private int gridSize = 1;
-	[SerializeField] private GameObject testVisualObjectPrefab;
 	[SerializeField] private Vector3 plantPositionOffset;
 
 	private List<Vector3> cropSlots = new List<Vector3>();
 
 	private Dictionary<Vector3, CropGrower> plantedCrops = new Dictionary<Vector3, CropGrower>();
 
-	private List<GameObject> visualGameObjects = new List<GameObject>();
+	private bool inUseFlag = false;
 
 	private void Awake() {
 		PlacementSystem.OnStartCropPlacement += PlacementSystemOnStartCropPlacement;
@@ -34,26 +33,13 @@ public class CropArea : MonoBehaviour {
 				Debug.Log($"Crop slot at {cropSlot}");
 			}
 		}
-
-		/*		foreach (Vector3 cropSlot in cropSlots) {
-					GameObject visual = Instantiate(testVisualObjectPrefab, cropSlot + Vector3.up, Quaternion.identity);
-					visual.transform.SetParent(transform);
-					visual.SetActive(false);
-					visualGameObjects.Add(visual);
-				}*/
 	}
 
 	private void PlacementSystemOnStopCropPlacement() {
-		foreach (GameObject visualObject in visualGameObjects) {
-			if (visualObject == null) continue;
-			visualObject.SetActive(false);
-		}
+		// Toggle visual objects
 	}
 	private void PlacementSystemOnStartCropPlacement() {
-		foreach (GameObject visualObject in visualGameObjects) {
-			if (visualObject == null) continue;
-			visualObject.SetActive(true);
-		}
+		// Toggle visual objects
 	}
 
 	public bool ContainsPosition(Vector3 position) {
@@ -89,5 +75,13 @@ public class CropArea : MonoBehaviour {
 
 	public Vector3 GetCropPositionOffset() {
 		return plantPositionOffset;
+	}
+
+	public void SetInUseFlag(bool value) {
+		inUseFlag = value;
+	}
+
+	public bool IsInUse() {
+		return inUseFlag;
 	}
 }
