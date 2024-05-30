@@ -10,7 +10,6 @@ public class NPC : MonoBehaviour {
 	[SerializeField] private NavMeshAgent navMeshAgent;
 
 	[SerializeField] private GameObject wateringCan;
-	[SerializeField] private FullBodyBipedIK fullBodyBipedIK;
 
 	[SerializeField] private TextMeshProUGUI debugTextMesh;
 
@@ -54,7 +53,15 @@ public class NPC : MonoBehaviour {
 		float walkSpeedNormalized = navMeshAgent.velocity.magnitude / navMeshAgent.speed;
 		animator.SetFloat("WalkSpeed", walkSpeedNormalized);
 
+		navMeshAgent.isStopped = false;
 		navMeshAgent.SetDestination(position);
+	}
+	public void Arrived() {
+		// Stop the npc instantly
+		navMeshAgent.isStopped = true;
+		navMeshAgent.velocity = Vector3.zero;
+
+		animator.SetFloat("WalkSpeed", 0f);
 	}
 
 	public void OnAnimationComplete() {

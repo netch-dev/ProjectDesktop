@@ -3703,7 +3703,7 @@ GameObject:
   - component: {fileID: 7110193089531439312}
   - component: {fileID: 8457067091356961422}
   - component: {fileID: 9071184316058916806}
-  - component: {fileID: 2915148477315816327}
+  - component: {fileID: 5169756856762609820}
   m_Layer: 0
   m_Name: TaskNPC
   m_TagString: Untagged
@@ -3739,10 +3739,10 @@ NavMeshAgent:
   m_AgentTypeID: 0
   m_Radius: 0.5
   m_Speed: 4
-  m_Acceleration: 8
+  m_Acceleration: 4
   avoidancePriority: 50
   m_AngularSpeed: 240
-  m_StoppingDistance: 2
+  m_StoppingDistance: 1
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -3783,11 +3783,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f618616560d6f8949bd6e668bdcda809, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 2915148477315816327}
+  animator: {fileID: 5169756856762609820}
   navMeshAgent: {fileID: 7110193089531439312}
   wateringCan: {fileID: 6206284282458066803}
   debugTextMesh: {fileID: 3081856073555211246}
---- !u!95 &2915148477315816327
+--- !u!95 &5169756856762609820
 Animator:
   serializedVersion: 5
   m_ObjectHideFlags: 0
@@ -3800,7 +3800,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: 8df9f7ef3187ea94394789ab895e8227, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -5412,43 +5412,43 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3114439864850064438, guid: 6bb3792295be6374db9d296a6a1e5dab, type: 3}
       propertyPath: m_LocalScale.x
-      value: 2
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 3114439864850064438, guid: 6bb3792295be6374db9d296a6a1e5dab, type: 3}
       propertyPath: m_LocalScale.y
-      value: 2
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 3114439864850064438, guid: 6bb3792295be6374db9d296a6a1e5dab, type: 3}
       propertyPath: m_LocalScale.z
-      value: 2
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 3114439864850064438, guid: 6bb3792295be6374db9d296a6a1e5dab, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.742
+      value: 0.52
       objectReference: {fileID: 0}
     - target: {fileID: 3114439864850064438, guid: 6bb3792295be6374db9d296a6a1e5dab, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.006
+      value: -0.01
       objectReference: {fileID: 0}
     - target: {fileID: 3114439864850064438, guid: 6bb3792295be6374db9d296a6a1e5dab, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.468
+      value: -0.424
       objectReference: {fileID: 0}
     - target: {fileID: 3114439864850064438, guid: 6bb3792295be6374db9d296a6a1e5dab, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.5682328
+      value: 0.5213339
       objectReference: {fileID: 0}
     - target: {fileID: 3114439864850064438, guid: 6bb3792295be6374db9d296a6a1e5dab, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.4208462
+      value: 0.4777144
       objectReference: {fileID: 0}
     - target: {fileID: 3114439864850064438, guid: 6bb3792295be6374db9d296a6a1e5dab, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.4208462
+      value: 0.4777144
       objectReference: {fileID: 0}
     - target: {fileID: 3114439864850064438, guid: 6bb3792295be6374db9d296a6a1e5dab, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.5682328
+      value: 0.5213339
       objectReference: {fileID: 0}
     - target: {fileID: 3114439864850064438, guid: 6bb3792295be6374db9d296a6a1e5dab, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -5456,11 +5456,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3114439864850064438, guid: 6bb3792295be6374db9d296a6a1e5dab, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 73.049
+      value: 85
       objectReference: {fileID: 0}
     - target: {fileID: 3114439864850064438, guid: 6bb3792295be6374db9d296a6a1e5dab, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 3114439864850064438, guid: 6bb3792295be6374db9d296a6a1e5dab, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

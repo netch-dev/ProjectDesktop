@@ -25,7 +25,7 @@ public class HarvestTask : ITask {
 				npc.MoveTo(currentCrop.transform.position);
 			} else {
 				// Start harvesting
-				animator.SetFloat("WalkSpeed", 0f);
+				npc.Arrived();
 				currentCrop.HarvestCrop();
 				currentCrop = null;
 			}

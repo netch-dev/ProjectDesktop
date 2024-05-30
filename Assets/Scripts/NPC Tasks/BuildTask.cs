@@ -25,8 +25,7 @@ public class BuildTask : ITask {
 			if (Vector3.Distance(npc.transform.position, currentBuilding.transform.position) > 3f) {
 				npc.MoveTo(currentBuilding.transform.position);
 			} else {
-				// Start building
-				animator.SetFloat("WalkSpeed", 0f);
+				npc.Arrived();
 				currentBuilding.TryToBuild();
 			}
 		} else {
