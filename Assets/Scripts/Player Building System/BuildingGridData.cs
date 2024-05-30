@@ -71,27 +71,6 @@ public class BuildingGridData {
 			}
 		}
 
-		List<Vector3Int> outerPositions = CalculateOuterPositions(gridPosition, objectSize);
-		foreach (Vector3Int outerPosition in outerPositions) {
-			// now we need to check if the outer positions contain an object
-			// if they dont contain an object, generate the outer positions for that object, and make sure that object has an open spot for pathing
-			if (!placedObjects.ContainsKey(outerPosition)) continue;
-
-			PlacementData outerObject = placedObjects[outerPosition];
-			List<Vector3Int> outerObjectOuterPositions = CalculateOuterPositions(outerObject.gridOriginPosition, outerObject.objectSize);
-
-			// Now we need to make sure the outer object has an open spot for pathing
-			bool hasSpot = false;
-			foreach (Vector3Int outerObjectOuterPosition in outerObjectOuterPositions) {
-				if (!placedObjects.ContainsKey(outerObjectOuterPosition) && !positionToOccupy.Contains(outerObjectOuterPosition)) {
-					hasSpot = true;
-					break;
-				}
-			}
-
-			if (!hasSpot) return false;
-		}
-
 		return true;
 	}
 
