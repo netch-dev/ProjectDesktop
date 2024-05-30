@@ -26,7 +26,7 @@ public class BuildTask : ITask {
 				npc.MoveTo(currentBuilding.transform.position);
 			} else {
 				npc.Arrived();
-				currentBuilding.TryToBuild();
+				currentBuilding.TryToBuild(false);
 			}
 		} else {
 			Debug.Log("No building to build");

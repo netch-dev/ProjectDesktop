@@ -22,6 +22,16 @@ public class PreviewSystem : MonoBehaviour {
 		PreparePreview(previewObject);
 		PrepareCursor(size);
 		//cellIndicator.SetActive(true);
+
+		// Get all of the objects that have OuterCube in their name and print their position
+		Debug.Log("============");
+		// Get the objects from the previewObjects children
+		Transform[] children = previewObject.GetComponentsInChildren<Transform>();
+		foreach (Transform child in children) {
+			if (child.name.StartsWith("OuterCube")) {
+				Debug.Log($"{child.name} local position at {child.localPosition}");
+			}
+		}
 	}
 
 	private void PrepareCursor(Vector2Int size) {

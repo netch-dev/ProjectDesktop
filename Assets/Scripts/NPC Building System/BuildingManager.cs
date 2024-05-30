@@ -16,7 +16,10 @@ public class BuildingManager : MonoBehaviour {
 
 	private void BuildingScaffold_OnBuildingPlaced(object sender, EventArgs e) {
 		BuildingScaffold buildingScaffold = sender as BuildingScaffold;
-		pendingBuildingList.Add(buildingScaffold);
+		//pendingBuildingList.Add(buildingScaffold);
+
+		// todo remove
+		buildingScaffold.TryToBuild(true);
 	}
 
 	public bool HasBuildingWaitingToBeBuilt() {

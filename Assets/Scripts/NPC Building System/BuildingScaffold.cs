@@ -23,7 +23,12 @@ public class BuildingScaffold : MonoBehaviour {
 	}
 
 	// Returns true if the building is finished building
-	public bool TryToBuild() {
+	public bool TryToBuild(bool instantBuild) {
+		if (instantBuild) {
+			FinishedBuilding();
+			return true;
+		}
+
 		if (!isCurrentlyBuilding) {
 			StartBuilding();
 		}
