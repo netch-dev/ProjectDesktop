@@ -90,19 +90,13 @@ public class BuildingGridData {
 }
 
 public class PlacementData {
-	public PlacementData(List<Vector3Int> occupiedPositions, int id, int placedObjectIndex, Vector3Int gridOriginPosition, Vector2Int objectSize) {
+	public PlacementData(List<Vector3Int> occupiedPositions, int id, int placedObjectIndex) {
 		this.occupiedPositions = occupiedPositions;
 		this.ID = id;
 		this.PlacedObjectIndex = placedObjectIndex;
-		this.gridOriginPosition = gridOriginPosition;
-		this.objectSize = objectSize;
-
 	}
 
 	public List<Vector3Int> occupiedPositions;
 	public int ID { get; private set; }
 	public int PlacedObjectIndex { get; private set; }
-
-	public Vector3Int gridOriginPosition { get; private set; }
-	public Vector2Int objectSize { get; private set; }
 }
