@@ -7,7 +7,7 @@ public class BuildingGridData {
 
 	public void AddObjectAt(Vector3Int gridPosition, Vector2Int objectSize, int ID, int placedObjectIndex) {
 		List<Vector3Int> positionToOccupy = CalculatePositions(gridPosition, objectSize);
-		PlacementData data = new PlacementData(positionToOccupy, ID, placedObjectIndex, gridPosition, objectSize);
+		PlacementData data = new PlacementData(positionToOccupy, ID, placedObjectIndex);
 
 		foreach (Vector3Int position in positionToOccupy) {
 			if (placedObjects.ContainsKey(position)) {
@@ -16,18 +16,6 @@ public class BuildingGridData {
 
 			placedObjects[position] = data;
 		}
-	}
-
-	private List<Vector3Int> CalculatePositions(Vector3Int gridPosition, Vector2Int objectSize) {
-		List<Vector3Int> returnValues = new();
-		// Always assuming we're placing objects from the bottom left corner
-		for (int x = 0; x < objectSize.x; x++) {
-			for (int y = 0; y < objectSize.y; y++) {
-				returnValues.Add(gridPosition + new Vector3Int(x, 0, y));
-			}
-		}
-
-		return returnValues;
 	}
 
 	private List<Vector3Int> CalculateOuterPositions(Vector3Int gridPosition, Vector2Int objectSize) {
@@ -61,6 +49,19 @@ public class BuildingGridData {
 
 		return outerPositions;
 	}
+
+	private List<Vector3Int> CalculatePositions(Vector3Int gridPosition, Vector2Int objectSize) {
+		List<Vector3Int> returnValues = new();
+		// Always assuming we're placing objects from the bottom left corner
+		for (int x = 0; x < objectSize.x; x++) {
+			for (int y = 0; y < objectSize.y; y++) {
+				returnValues.Add(gridPosition + new Vector3Int(x, 0, y));
+			}
+		}
+
+		return returnValues;
+	}
+
 
 	public bool CanPlaceObjectAt(Vector3Int gridPosition, Vector2Int objectSize) {
 		List<Vector3Int> positionToOccupy = CalculatePositions(gridPosition, objectSize);

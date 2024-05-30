@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3252975231615316027}
   - component: {fileID: 569792264994616273}
-  - component: {fileID: 6229658376281170181}
   m_Layer: 0
   m_Name: Planter_2x2
   m_TagString: Untagged
@@ -49,22 +48,6 @@ MonoBehaviour:
   size: {x: 2, y: 2}
   gridSize: 1
   plantPositionOffset: {x: 0, y: 0.295, z: 0}
---- !u!208 &6229658376281170181
-NavMeshObstacle:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1865860783125734666}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.6, y: 0.5, z: 0.6}
-  m_MoveThreshold: 0.1
-  m_Carve: 1
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 1, y: 0, z: 1}
-  m_TimeToStationary: 0.5
 --- !u!1 &5204788497823973736
 GameObject:
   m_ObjectHideFlags: 0

@@ -49444,7 +49444,7 @@ AnimationClip:
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
-        time: 5.6
+        time: 5.5
         value: 0
         inSlope: Infinity
         outSlope: Infinity
@@ -49456,7 +49456,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_IsActive
-    path: Hips_jnt/Spine_jnt/Spine_jnt 1/Chest_jnt/Shoulder_Right_jnt/Arm_Right_jnt/Forearm_Right_jnt/Hand_Right_jnt/SM_Prop_Watering_Can_01/Shower
+    path: Hips_jnt/Spine_jnt/Spine_jnt 1/Chest_jnt/Shoulder_Right_jnt/Arm_Right_jnt/Forearm_Right_jnt/Hand_Right_jnt/SM_Prop_Watering_Can_01/SM_Prop_Watering_Can_Top/Shower
     classID: 1
     script: {fileID: 0}
     flags: 0
@@ -49883,7 +49883,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 3497236555
+      path: 500507899
       attribute: 2086281974
       script: {fileID: 0}
       typeID: 1
@@ -100096,7 +100096,7 @@ AnimationClip:
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
-        time: 5.6
+        time: 5.5
         value: 0
         inSlope: Infinity
         outSlope: Infinity
@@ -100108,7 +100108,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_IsActive
-    path: Hips_jnt/Spine_jnt/Spine_jnt 1/Chest_jnt/Shoulder_Right_jnt/Arm_Right_jnt/Forearm_Right_jnt/Hand_Right_jnt/SM_Prop_Watering_Can_01/Shower
+    path: Hips_jnt/Spine_jnt/Spine_jnt 1/Chest_jnt/Shoulder_Right_jnt/Arm_Right_jnt/Forearm_Right_jnt/Hand_Right_jnt/SM_Prop_Watering_Can_01/SM_Prop_Watering_Can_Top/Shower
     classID: 1
     script: {fileID: 0}
     flags: 0
