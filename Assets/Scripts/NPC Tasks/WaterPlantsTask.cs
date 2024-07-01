@@ -1,24 +1,38 @@
 using RootMotion.FinalIK;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class WaterPlantsTask : ITask {
 	private Animator animator;
+
+	private GameObject rightHandEffector;
+	private Vector3 initialRightHandLocalPosition;
+	private Vector3 wateringRightHandLocalPosition = new Vector3(0.43f, 1.47f, 1.12f);
+
+	private FullBodyBipedIK fullBodyBipedIK;
 
 	private CropGrower currentCrop = null;
 	private bool isCurrentlyWatering = false;
 
 	private int currentWaterLevel = 0;
 
-	public WaterPlantsTask(NPC npc, Animator animator, int reduceAmountPerWateringRun) {
+	public WaterPlantsTask(NPC npc, Animator animator, GameObject rightHandEffector, FullBodyBipedIK fullBodyBipedIK, int reduceAmountPerWateringRun) {
 		npc.OnAnimationCompleted += () => {
-			currentCrop.WaterCrop();
+			//currentCrop.WaterCrop();
+			currentCrop.cropArea.WaterCropArea();
 			currentCrop = null;
-			isCurrentlyWatering = false;
 			currentWaterLevel -= reduceAmountPerWateringRun;
+
+			isCurrentlyWatering = false;
 		};
 
 		this.animator = animator;
+
+		this.rightHandEffector = rightHandEffector;
+		this.initialRightHandLocalPosition = rightHandEffector.transform.localPosition;
+
+		this.fullBodyBipedIK = fullBodyBipedIK;
 	}
 	public bool IsAvailable(NPC npc) {
 		return currentCrop != null || CropManager.Instance.HasCropsWaitingToBeWatered();
@@ -54,10 +68,20 @@ public class WaterPlantsTask : ITask {
 				npc.MoveTo(currentCrop.transform.position);
 			} else {
 				npc.Arrived();
-				WaterPlant(npc, currentCrop.transform.position);
+				npc.StartCoroutine(WaterPlantCoroutine(npc, currentCrop.transform.position));
+				//WaterPlant(npc, currentCrop.transform.position);
 			}
 		}
 	}
+
+	private IEnumerator WaterPlantCoroutine(NPC npc, Vector3 cropPosition) {
+		isCurrentlyWatering = true;
+
+		yield return npc.LookAt(cropPosition);
+
+		animator.SetTrigger("Watering");
+	}
+
 
 	private void WaterPlant(NPC npc, Vector3 cropPosition) {
 		isCurrentlyWatering = true;
@@ -65,6 +89,7 @@ public class WaterPlantsTask : ITask {
 		npc.transform.LookAt(cropPosition);
 
 		animator.SetTrigger("Watering");
+		rightHandEffector.transform.localPosition = wateringRightHandLocalPosition;
 	}
 
 	public override string ToString() {
