@@ -1,38 +1,73 @@
+using System.Collections;
 using UnityEngine;
 
 public class HarvestTask : ITask {
 	private Animator animator;
 	private CropGrower currentCrop = null;
+	private bool isCurrentlyHarvesting = false;
+
 	public HarvestTask(Animator animator) {
 		this.animator = animator;
 	}
-	public bool IsAvailable(NPC npc) {
+
+	public bool IsAvailable() {
+		// Task is available if there are crops to harvest or one is already assigned
 		return currentCrop != null || CropManager.Instance.HasCropsWaitingToBeHarvested();
 	}
 
 	public bool IsComplete(NPC npc) {
-		Debug.Log($"Checking if harvest task is complete | currentCrop {currentCrop} | canHarvest: {currentCrop?.CanHarvestCrop()}");
-		return currentCrop == null || !currentCrop.CanHarvestCrop();
+		// Task is complete only if no crops are left to harvest
+		return currentCrop == null && !CropManager.Instance.HasCropsWaitingToBeHarvested();
+	}
+
+	public void OnStart(NPC npc) {
+		Debug.Log("Starting HarvestTask...");
 	}
 
 	public void ExecuteTask(NPC npc) {
+		if (isCurrentlyHarvesting) return;
+
 		if (currentCrop == null) {
 			currentCrop = CropManager.Instance.GetClosestHarvestable(npc.transform.position);
 		}
 
 		if (currentCrop != null) {
-			if (Vector3.Distance(npc.transform.position, currentCrop.transform.position) > 3f) {
+			if (Vector3.Distance(npc.transform.position, currentCrop.transform.position) > 1.5f) {
 				npc.MoveTo(currentCrop.transform.position);
 			} else {
-				// Start harvesting
-				npc.Arrived();
-				currentCrop.HarvestCrop();
-				currentCrop = null;
+				npc.StopMoving();
+				HarvestCrop(npc);
 			}
 		}
 	}
-	public override string ToString() {
-		return $"Harvest Task\nCrop: {currentCrop?.gameObject.name}";
+
+	private void HarvestCrop(NPC npc) {
+		if (isCurrentlyHarvesting) return;
+
+		isCurrentlyHarvesting = true;
+
+		npc.StartCoroutine(HarvestCropCoroutine(npc, currentCrop));
+	}
+
+	private IEnumerator HarvestCropCoroutine(NPC npc, CropGrower crop) {
+		Debug.Log($"Starting to harvest crop: {crop.name}");
+
+		yield return npc.LookAt(crop.transform.position);
+
+		animator.SetTrigger("Harvest");
+
+		yield return new WaitForSeconds(3f);
+
+		crop.HarvestCrop();
+		currentCrop = null;
+
+		isCurrentlyHarvesting = false;
+		Debug.Log($"Finished harvesting crop: {crop.name}");
+	}
+
+	public void OnFinish(NPC npc) {
+		Debug.Log("Finished HarvestTask.");
+		currentCrop = null;
+		isCurrentlyHarvesting = false;
 	}
 }
-

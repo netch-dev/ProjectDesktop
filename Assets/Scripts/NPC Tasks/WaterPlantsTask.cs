@@ -1,99 +1,91 @@
-using RootMotion.FinalIK;
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class WaterPlantsTask : ITask {
 	private Animator animator;
-
-	private GameObject rightHandEffector;
-	private Vector3 initialRightHandLocalPosition;
-	private Vector3 wateringRightHandLocalPosition = new Vector3(0.43f, 1.47f, 1.12f);
-
-	private FullBodyBipedIK fullBodyBipedIK;
-
 	private CropGrower currentCrop = null;
 	private bool isCurrentlyWatering = false;
 
 	private int currentWaterLevel = 0;
+	private readonly int reduceAmountPerWateringRun = 25;
 
-	public WaterPlantsTask(NPC npc, Animator animator, GameObject rightHandEffector, FullBodyBipedIK fullBodyBipedIK, int reduceAmountPerWateringRun) {
-		npc.OnAnimationCompleted += () => {
-			//currentCrop.WaterCrop();
-			currentCrop.cropArea.WaterCropArea();
-			currentCrop = null;
-			currentWaterLevel -= reduceAmountPerWateringRun;
-
-			isCurrentlyWatering = false;
-		};
-
+	public WaterPlantsTask(Animator animator) {
 		this.animator = animator;
-
-		this.rightHandEffector = rightHandEffector;
-		this.initialRightHandLocalPosition = rightHandEffector.transform.localPosition;
-
-		this.fullBodyBipedIK = fullBodyBipedIK;
 	}
-	public bool IsAvailable(NPC npc) {
+
+	public bool IsAvailable() {
+		// Task is available if there are crops waiting to be watered or one is already assigned
 		return currentCrop != null || CropManager.Instance.HasCropsWaitingToBeWatered();
 	}
 
 	public bool IsComplete(NPC npc) {
-		return currentCrop == null || !currentCrop.CanWaterCrop();
+		// Task is complete only if there are no crops to water
+		return currentCrop == null && !CropManager.Instance.HasCropsWaitingToBeWatered();
+	}
+
+	public void OnStart(NPC npc) {
+		Debug.Log("Starting WaterPlantsTask...");
 	}
 
 	public void ExecuteTask(NPC npc) {
-		if (isCurrentlyWatering) {
-			Debug.Log("Already watering");
-			return;
-		}
+		if (isCurrentlyWatering) return;
 
 		if (currentCrop == null) {
 			currentCrop = CropManager.Instance.GetClosestCropThatNeedsWater(npc.transform.position);
-		}
-
-		if (currentWaterLevel <= 0) {
-			Transform waterNode = GameHandler.GetClosestWaterNode_Static(npc.transform.position);
-			if (Vector3.Distance(npc.transform.position, waterNode.position) > 1.5f) {
-				npc.MoveTo(waterNode.position);
-			} else {
-				npc.Arrived();
-				currentWaterLevel = 100;
-			}
-			return;
 		}
 
 		if (currentCrop != null) {
 			if (Vector3.Distance(npc.transform.position, currentCrop.transform.position) > 1.5f) {
 				npc.MoveTo(currentCrop.transform.position);
 			} else {
-				npc.Arrived();
-				npc.StartCoroutine(WaterPlantCoroutine(npc, currentCrop.transform.position));
-				//WaterPlant(npc, currentCrop.transform.position);
+				npc.StopMoving();
+				WaterCrop(npc);
 			}
+		} else if (currentWaterLevel <= 0) {
+			RefillWater(npc);
 		}
 	}
 
-	private IEnumerator WaterPlantCoroutine(NPC npc, Vector3 cropPosition) {
+	private void WaterCrop(NPC npc) {
+		if (isCurrentlyWatering) return;
+
 		isCurrentlyWatering = true;
 
-		yield return npc.LookAt(cropPosition);
-
-		animator.SetTrigger("Watering");
+		npc.StartCoroutine(WaterCropCoroutine(npc, currentCrop));
 	}
 
+	private IEnumerator WaterCropCoroutine(NPC npc, CropGrower crop) {
+		Debug.Log($"Starting to water crop: {crop.name}");
 
-	private void WaterPlant(NPC npc, Vector3 cropPosition) {
-		isCurrentlyWatering = true;
-
-		npc.transform.LookAt(cropPosition);
+		yield return npc.LookAt(crop.transform.position);
 
 		animator.SetTrigger("Watering");
-		rightHandEffector.transform.localPosition = wateringRightHandLocalPosition;
+
+		yield return new WaitForSeconds(2f);
+
+		crop.cropArea.WaterCropArea();
+		currentCrop = null;
+		currentWaterLevel -= reduceAmountPerWateringRun;
+
+		isCurrentlyWatering = false;
+		Debug.Log($"Finished watering crop: {crop.name}");
 	}
 
-	public override string ToString() {
-		return $"WaterPlantsTask\nCrop at {currentCrop?.transform.position}\nWater level: {currentWaterLevel}";
+	private void RefillWater(NPC npc) {
+		Transform waterNode = GameHandler.GetClosestWaterNode_Static(npc.transform.position);
+
+		if (Vector3.Distance(npc.transform.position, waterNode.position) > 1.5f) {
+			npc.MoveTo(waterNode.position);
+		} else {
+			npc.StopMoving();
+			currentWaterLevel = 100;
+			Debug.Log("Refilled water.");
+		}
+	}
+
+	public void OnFinish(NPC npc) {
+		Debug.Log("Finished WaterPlantsTask.");
+		currentCrop = null;
+		isCurrentlyWatering = false;
 	}
 }
-
