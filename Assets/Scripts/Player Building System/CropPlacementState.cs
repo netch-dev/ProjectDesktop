@@ -34,8 +34,6 @@ public class CropPlacementState : IBuildingState {
 
 	public void EndState() {
 		previewSystem.StopShowingPreview();
-
-		// Todo stop showing all the crop positions
 	}
 
 	public void OnAction(Vector3Int gridPosition) {

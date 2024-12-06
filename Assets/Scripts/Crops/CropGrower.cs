@@ -8,7 +8,6 @@ public class CropGrower : MonoBehaviour {
 	public Action OnCropHarvested;
 	//public Action OnCropWatered;
 
-	[SerializeField] private GameObject parentObject;
 	[SerializeField] private GameObject[] cropStages;
 	[SerializeField] private float secondsToFullyGrow;
 	[SerializeField] private int goldAmountForHarvesting;
@@ -27,16 +26,15 @@ public class CropGrower : MonoBehaviour {
 	private bool canWaterCrop = false;
 
 	public void InitCrop(CropArea cropArea) {
+		this.cropArea = cropArea;
+
 		for (int i = 1; i < cropStages.Length; i++) {
 			cropStages[i].SetActive(false);
 		}
 
-		this.cropArea = cropArea;
-
 		secondsPerStage = secondsToFullyGrow / cropStages.Length;
 		nextTimeToChange = UnityEngine.Time.timeSinceLevelLoad + secondsToFullyGrow;
 
-		// Invoke repeating method to grow the crop
 		InvokeRepeating(nameof(TryGrowCrop), 0, 1);
 	}
 
@@ -47,7 +45,6 @@ public class CropGrower : MonoBehaviour {
 			OnEmptyWater?.Invoke(this, EventArgs.Empty);
 			canWaterCrop = true;
 
-			// enable the waterimage
 			waterImage.gameObject.SetActive(true);
 			return;
 		}
@@ -58,12 +55,8 @@ public class CropGrower : MonoBehaviour {
 		if (!canGrow) return;
 
 		if (currentStage < cropStages.Length - 1) {
-			// Disable the current stage game object
 			cropStages[currentStage].SetActive(false);
-
-			// Enable the next stage game object
-			currentStage++;
-			cropStages[currentStage].SetActive(true);
+			cropStages[++currentStage].SetActive(true);
 
 			nextTimeToChange = UnityEngine.Time.timeSinceLevelLoad + secondsPerStage;
 		}
@@ -82,10 +75,7 @@ public class CropGrower : MonoBehaviour {
 
 		GameResources.AddResourceAmount(GameResources.ResourceType.Gold, goldAmountForHarvesting);
 
-		if (IsInvoking(nameof(TryGrowCrop))) {
-			CancelInvoke(nameof(TryGrowCrop));
-		}
-		UnityEngine.Object.Destroy(parentObject);
+		UnityEngine.Object.Destroy(this.gameObject);
 	}
 
 	public bool CanHarvestCrop() {
