@@ -59,9 +59,10 @@ public class WaterPlantsTask : ITask {
 
 		yield return npc.LookAt(crop.transform.position);
 
-		animator.SetTrigger("Watering");
-
-		yield return new WaitForSeconds(2f);
+		if (!DeveloperCheats.GetCheat(DeveloperCheats.Cheat.InstantWater)) {
+			animator.SetTrigger("Watering");
+			yield return new WaitForSeconds(6f);
+		}
 
 		crop.cropArea.WaterCropArea();
 		currentCrop = null;

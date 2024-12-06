@@ -56,7 +56,10 @@ public class HarvestTask : ITask {
 
 		animator.SetTrigger("Harvest");
 
-		yield return new WaitForSeconds(3f);
+		if (!DeveloperCheats.GetCheat(DeveloperCheats.Cheat.InstantHarvest)) {
+			yield return new WaitForSeconds(1f);
+		}
+
 
 		crop.HarvestCrop();
 		currentCrop = null;

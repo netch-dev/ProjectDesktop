@@ -53,7 +53,7 @@ public class BuildTask : ITask {
 	}
 
 	private IEnumerator BuildCoroutine(NPC npc) {
-		while (!currentBuilding.TryToBuild(false)) {
+		while (!currentBuilding.TryToBuild(DeveloperCheats.GetCheat(DeveloperCheats.Cheat.InstantBuild))) {
 			Debug.Log($"Building in progress: {currentBuilding.name}");
 			yield return null;
 		}
