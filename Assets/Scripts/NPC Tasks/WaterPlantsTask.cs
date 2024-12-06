@@ -73,7 +73,7 @@ public class WaterPlantsTask : ITask {
 	}
 
 	private void RefillWater(NPC npc) {
-		Transform waterNode = GameHandler.GetClosestWaterNode_Static(npc.transform.position);
+		Transform waterNode = GameHandler.Instance.GetClosestWaterNode(npc.transform.position);
 
 		if (Vector3.Distance(npc.transform.position, waterNode.position) > 1.5f) {
 			npc.MoveTo(waterNode.position);

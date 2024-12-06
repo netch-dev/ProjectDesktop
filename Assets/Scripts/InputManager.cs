@@ -11,9 +11,7 @@ public class InputManager : MonoBehaviour {
 	public event Action OnClicked, OnExit;
 
 	private void Update() {
-		// Check for mouse click
 		if (Input.GetMouseButton(0)) {
-			Debug.Log("Mouse clicked");
 			OnClicked?.Invoke();
 		}
 
