@@ -9,6 +9,14 @@ public class ObjectDatabaseSO : ScriptableObject {
 
 [Serializable]
 public class ObjectData {
+	public ObjectData(string name, int id, Vector2Int size, GameObject prefab, GameObject placementGhostPrefab) {
+		this.Name = name;
+		this.ID = id;
+		this.Size = size;
+		this.Prefab = prefab;
+		this.PlacementGhostPrefab = placementGhostPrefab;
+	}
+
 	[field: SerializeField] public string Name { get; private set; }
 
 	[field: SerializeField] public int ID { get; private set; }
